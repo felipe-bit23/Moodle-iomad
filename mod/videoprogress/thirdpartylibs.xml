@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>vendor/hls</location>
+        <name>hls.js</name>
+        <version>1.6.13</version>
+        <license>Apache-2.0</license>
+        <licenseversion>2.0</licenseversion>
+    </library>
+    <library>
+        <location>vendor/vimeo</location>
+        <name>Vimeo Player</name>
+        <version>2.29.2</version>
+        <license>MIT</license>
+    </library>
+    <library>
+        <location>vendor/datatables</location>
+        <name>DataTables</name>
+        <version>2.3.4</version>
+        <license>MIT</license>
+    </library>
+</libraries>

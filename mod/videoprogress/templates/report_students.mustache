@@ -1,0 +1,118 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/report_students
+
+    Example context (json):
+    {
+        "students": [
+            {
+                "avatarurl": "https://example.test/user/pix.php/2/f1.jpg",
+                "fullname": "Aluno Exemplo",
+                "email": "aluno@example.test",
+                "percent": 72.4,
+                "percentrounded": 72,
+                "uniquewatched": "07:12",
+                "totalwatchtime": "09:40",
+                "lastposition": "08:05",
+                "lastview": "12/08/2026 00:05",
+                "statusclass": "info",
+                "status": "Em andamento",
+                "timeline": [
+                    {
+                        "level": 1,
+                        "tooltip": "00:00–00:10"
+                    },
+                    {
+                        "level": 3,
+                        "tooltip": "00:10–00:20"
+                    }
+                ],
+                "timelinealternative": "O aluno assistiu principalmente o início do vídeo.",
+                "detailsurl": "/mod/videoprogress/report/user.php?id=10&userid=2",
+                "canreset": true,
+                "reseturl": "/mod/videoprogress/report/reset.php?id=10&userid=2"
+            }
+        ]
+    }
+}}
+
+<div class="videoprogress-report-list">
+    <table class="videoprogress-students-table" data-region="students-table">
+        <thead>
+        <tr>
+            <th data-priority="1">{{#str}} student, videoprogress {{/str}}</th>
+            <th>{{#str}} progress, videoprogress {{/str}}</th>
+            <th>{{#str}} uniquewatched, videoprogress {{/str}}</th>
+            <th>{{#str}} totalwatchtime, videoprogress {{/str}}</th>
+            <th>{{#str}} lastposition, videoprogress {{/str}}</th>
+            <th>{{#str}} lastview, videoprogress {{/str}}</th>
+            <th>{{#str}} status, videoprogress {{/str}}</th>
+            <th>{{#str}} timeline, videoprogress {{/str}}</th>
+            <th data-orderable="false">{{#str}} actions, videoprogress {{/str}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#students}}
+            <tr>
+                <td data-label="{{#str}} student, videoprogress {{/str}}">
+                    <div class="videoprogress-student-identity">
+                        <img src="{{{avatarurl}}}" alt="" width="50" height="50">
+                        <span><strong>{{{fullname}}}</strong><small>{{{email}}}</small></span>
+                    </div>
+                </td>
+                <td data-label="{{#str}} progress, videoprogress {{/str}}" data-order="{{{percent}}}">
+                    <div class="videoprogress-student-progress">
+                        <strong>{{{percentrounded}}}%</strong>
+                        <div class="progress"
+                             role="progressbar"
+                             aria-label="{{#str}} studentprogressaria, videoprogress, {{{percentrounded}}} {{/str}}">
+                            <div class="progress-bar" style="width: {{{percent}}}%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="{{#str}} uniquewatched, videoprogress {{/str}}">{{{uniquewatched}}}</td>
+                <td data-label="{{#str}} totalwatchtime, videoprogress {{/str}}">{{{totalwatchtime}}}</td>
+                <td data-label="{{#str}} lastposition, videoprogress {{/str}}">{{{lastposition}}}</td>
+                <td data-label="{{#str}} lastview, videoprogress {{/str}}">{{{lastview}}}</td>
+                <td data-label="{{#str}} status, videoprogress {{/str}}"><span
+                        class="badge badge-{{{statusclass}}}">{{{status}}}</span></td>
+                <td data-label="{{#str}} timeline, videoprogress {{/str}}">
+                    <div class="videoprogress-mini-map"
+                         role="progressbar"
+                         aria-label="{{#str}} individualtimelinearia, videoprogress, {{{fullname}}} {{/str}}">
+                        {{#timeline}}
+                            <i class="level-{{{level}}}" title="{{{tooltip}}}"></i>
+                        {{/timeline}}
+                    </div>
+                    <span class="sr-only">{{{timelinealternative}}}</span>
+                </td>
+                <td data-label="{{#str}} actions, videoprogress {{/str}}">
+                    <div class="videoprogress-row-actions">
+                        <a href="{{{detailsurl}}}"
+                           class="btn btn-sm btn-outline-primary">{{#str}}viewdetails, videoprogress {{/str}}</a>
+                        {{#canreset}}
+                            <a href="{{{reseturl}}}"
+                               class="btn btn-sm btn-outline-danger">{{#str}}resetprogress, videoprogress {{/str}}</a>
+                        {{/canreset}}
+                    </div>
+                </td>
+            </tr>
+        {{/students}}
+        </tbody>
+    </table>
+</div>

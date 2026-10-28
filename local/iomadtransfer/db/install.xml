@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/iomadtransfer/db" VERSION="20261022" COMMENT="XMLDB file for Moodle local/iomadtransfer"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+    <TABLES>
+        <TABLE NAME="local_iomadtransfer_request" COMMENT="Tracks course transfer and IOMAD consolidation requests">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="type" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="0 = course, 5 = consolidate_iomad"/>
+                <FIELD NAME="siteurl" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Remote site URL"/>
+                <FIELD NAME="direction" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="0 = target request, 1 = origin response"/>
+                <FIELD NAME="target_request_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Target request ID when direction = 1"/>
+                <FIELD NAME="origin_course_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="origin_course_fullname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="origin_course_shortname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="origin_course_idnumber" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="origin_enrolusers" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="1 = include users, grades, completion and quiz attempts"/>
+                <FIELD NAME="origin_backup_size" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="origin_backup_size_estimated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="origin_backup_url" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="downloaded" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Bytes downloaded so far"/>
+                <FIELD NAME="restored" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Restore percentage 0-100"/>
+                <FIELD NAME="target_course_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="target_category_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="target_target" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="5" SEQUENCE="false" COMMENT="2 = new course, 3 = replace, 4 = merge, 5 = consolidate_iomad"/>
+                <FIELD NAME="companyid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Target IOMAD company ID"/>
+                <FIELD NAME="company_groupid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Target IOMAD course group ID"/>
+                <FIELD NAME="consolidate_summary" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON summary of consolidated users, grades and attempts"/>
+                <FIELD NAME="error_code" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="error_message" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="fileurl" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="status" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="0=error, 1=not_started, 10=in_progress, 30=backup, 50=download, 70=downloaded, 80=restore, 85=consolidating, 100=completed"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="idx_status_direction" UNIQUE="false" FIELDS="status, direction"/>
+                <INDEX NAME="idx_target_company" UNIQUE="false" FIELDS="target_course_id, companyid"/>
+                <INDEX NAME="idx_origin_course" UNIQUE="false" FIELDS="origin_course_id"/>
+                <INDEX NAME="idx_userid" UNIQUE="false" FIELDS="userid"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_iomadtransfer_origin" COMMENT="Paired Origin Moodle platforms">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="host" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="token" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="default_companyid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Default IOMAD company ID mapped to this origin Moodle"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="lasttest" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="lastteststatus" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="lasttesterror" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="idx_default_company" UNIQUE="false" FIELDS="default_companyid"/>
+                <INDEX NAME="idx_userid" UNIQUE="false" FIELDS="userid"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="local_iomadtransfer_target" COMMENT="Authorized Target Moodle/IOMAD platforms">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="host" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="token" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="lasttest" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="lastteststatus" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="lasttesterror" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="idx_userid" UNIQUE="false" FIELDS="userid"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>

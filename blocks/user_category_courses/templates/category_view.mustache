@@ -1,0 +1,108 @@
+<div class="block_user_category_courses_view container-fluid py-3">
+
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+        <h2 class="h3 font-weight-bold text-dark m-0">{{categoryname}}</h2>
+        <a href="{{backurl}}" class="btn btn-outline-secondary btn-sm d-flex align-items-center">
+            <i class="fa fa-arrow-left me-2 mr-2" aria-hidden="true"></i>
+            <span>{{#str}} back, block_user_category_courses {{/str}}</span>
+        </a>
+    </div>
+
+    {{#hassubcategories}}
+        <div class="subcategories-section mb-4">
+            <div class="d-flex align-items-center mb-3">
+                <i class="fa fa-folder-open text-primary me-2 mr-2 fa-lg" aria-hidden="true"></i>
+                <h4 class="h5 font-weight-bold text-secondary m-0">{{subcategoriesheading}}</h4>
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                {{#subcategories}}
+                    <div class="col mb-3">
+                        <div class="card h-100 shadow-sm category-card subcategory-card">
+                            {{#hasimage}}
+                                <div class="card-header-banner card-header-banner-sm">
+                                    <a href="{{url}}"><img src="{{imageurl}}" alt="{{name}}" loading="lazy"></a>
+                                    <span class="category-badge">{{coursecount}} cursos</span>
+                                </div>
+                            {{/hasimage}}
+                            {{^hasimage}}
+                                <div class="card-header-banner card-header-banner-sm card-header-color" style="background: linear-gradient(135deg, {{color}}, rgba(0,0,0,0.3)); background-color: {{color}};">
+                                    <a href="{{url}}" class="text-decoration-none"><div class="category-initials category-initials-sm">{{initials}}</div></a>
+                                    <span class="category-badge">{{coursecount}} cursos</span>
+                                </div>
+                            {{/hasimage}}
+
+                            <div class="card-body d-flex flex-column p-3">
+                                <h6 class="card-title text-truncate font-weight-bold mb-2" title="{{name}}">
+                                    <a href="{{url}}" class="text-decoration-none text-dark">{{name}}</a>
+                                </h6>
+                                <div class="mt-auto pt-2">
+                                    <a href="{{url}}" class="btn btn-outline-primary btn-sm w-100">
+                                        {{#str}} explore, block_user_category_courses {{/str}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/subcategories}}
+            </div>
+        </div>
+
+        <hr class="section-divider my-4">
+    {{/hassubcategories}}
+
+    <div class="courses-section">
+        <div class="d-flex align-items-center mb-3">
+            <i class="fa fa-graduation-cap text-primary me-2 mr-2 fa-lg" aria-hidden="true"></i>
+            <h4 class="h5 font-weight-bold text-secondary m-0">{{coursesheading}}</h4>
+        </div>
+
+        {{#hascourses}}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
+                {{#courses}}
+                    <div class="col mb-4">
+                        <div class="card h-100 shadow-sm course-card">
+                            {{#hasimage}}
+                                <div class="card-header-banner">
+                                    <a href="{{url}}"><img src="{{imageurl}}" alt="{{fullname}}" loading="lazy"></a>
+                                </div>
+                            {{/hasimage}}
+                            {{^hasimage}}
+                                <div class="card-header-banner card-header-color" style="background: linear-gradient(135deg, {{color}}, rgba(0,0,0,0.35)); background-color: {{color}};">
+                                    <a href="{{url}}" class="text-decoration-none">
+                                        <i class="fa fa-graduation-cap text-white display-4" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            {{/hasimage}}
+
+                            <div class="card-body d-flex flex-column p-3">
+                                <span class="badge bg-light text-secondary border mb-2 align-self-start">{{shortname}}</span>
+                                <h5 class="card-title font-weight-bold mb-2">
+                                    <a href="{{url}}" class="text-decoration-none text-dark">{{fullname}}</a>
+                                </h5>
+                                {{#summary}}
+                                    <p class="card-text text-muted small mb-3">{{summary}}</p>
+                                {{/summary}}
+
+                                <div class="mt-auto pt-2 border-top">
+                                    <a href="{{url}}" class="btn btn-primary w-100 font-weight-bold d-flex align-items-center justify-content-center">
+                                        <span>{{#str}} gotocourse, block_user_category_courses {{/str}}</span>
+                                        <i class="fa fa-arrow-right ms-2 ml-2" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/courses}}
+            </div>
+        {{/hascourses}}
+
+        {{^hascourses}}
+            <div class="alert alert-info py-3 px-4 d-flex align-items-center" role="alert">
+                <i class="fa fa-info-circle fa-lg me-3 mr-3" aria-hidden="true"></i>
+                <div>{{#str}} nocoursesincategory, block_user_category_courses {{/str}}</div>
+            </div>
+        {{/hascourses}}
+    </div>
+
+</div>

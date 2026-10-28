@@ -1,0 +1,63 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/reset_confirmation
+
+    Example context (json):
+    {
+        "mass": false,
+        "count": 1,
+        "targetname": "Aluno Exemplo",
+        "actionurl": "/mod/videoprogress/report/reset.php",
+        "cmid": 10,
+        "userid": 2,
+        "sesskey": "examplesesskey",
+        "hiddenfields": [
+            {
+                "name": "status",
+                "value": "inprogress"
+            }
+        ],
+        "returnurl": "/mod/videoprogress/report/report.php?id=10"
+    }
+}}
+
+<div class="videoprogress-reset-confirmation">
+    <span class="videoprogress-reset-confirmation__icon" aria-hidden="true">!</span>
+    <h2>{{#str}} resetconfirmationtitle, videoprogress {{/str}}</h2>
+    {{#mass}}
+        <p>{{#str}} massresetconfirmation, videoprogress, {{{count}}} {{/str}}</p>
+    {{/mass}}
+    {{^mass}}
+        <p>{{#str}} resetconfirmation, videoprogress, {{{targetname}}} {{/str}}</p>
+    {{/mass}}
+    <p class="text-muted">{{#str}} resetdatadescription, videoprogress {{/str}}</p>
+    <form method="post" action="{{{actionurl}}}">
+        <input type="hidden" name="id" value="{{{cmid}}}">
+        <input type="hidden" name="userid" value="{{{userid}}}">
+        <input type="hidden" name="mass" value="{{#mass}}1{{/mass}}{{^mass}}0{{/mass}}">
+        <input type="hidden" name="confirmed" value="1">
+        <input type="hidden" name="sesskey" value="{{{sesskey}}}">
+        {{#hiddenfields}}
+            <input type="hidden" name="{{{name}}}" value="{{{value}}}">
+        {{/hiddenfields}}
+        <div class="videoprogress-reset-confirmation__actions">
+            <button type="submit" class="btn btn-danger">{{#str}} confirmreset, videoprogress {{/str}}</button>
+            <a href="{{{returnurl}}}" class="btn btn-secondary">{{#str}} cancel, videoprogress {{/str}}</a>
+        </div>
+    </form>
+</div>

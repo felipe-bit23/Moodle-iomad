@@ -1,0 +1,74 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/video_content
+
+    Example context (json):
+    {
+        "contentpoints": [
+            {
+                "id": 5,
+                "timepoint": 90,
+                "completed": false,
+                "timecode": "01:30",
+                "title": "Ponto de interação",
+                "hasitems": true,
+                "items": [
+                    {
+                        "name": "Nota"
+                    },
+                    {
+                        "name": "Quiz"
+                    }
+                ]
+            }
+        ]
+    }
+}}
+
+<aside class="videoprogress-video-content" aria-labelledby="videoprogress-content-heading">
+    <div class="videoprogress-video-content__header">
+        <h3 id="videoprogress-content-heading">{{#str}} videocontent, videoprogress {{/str}}</h3>
+    </div>
+    <ol class="videoprogress-video-content__list">
+        {{#contentpoints}}
+            <li>
+                <button type="button" data-content-point="{{id}}" data-time="{{timepoint}}"
+                        class="videoprogress-video-content__point">
+                    <span class="videoprogress-video-content__status">
+                        {{#completed}}
+                            <span aria-hidden="true">✓</span>
+                        <span class="sr-only">{{#str}}statuscompleted, videoprogress {{/str}}</span>
+                        {{/completed}}
+                        {{^completed}}{{{timecode}}}{{/completed}}
+                    </span>
+                    <span class="videoprogress-video-content__text">
+                        <strong>{{{title}}}</strong>
+                        {{#hasitems}}
+                            <small>
+                                {{#items}}
+                                    <span>{{{name}}}</span>
+                                {{/items}}
+                            </small>
+                        {{/hasitems}}
+                    </span>
+                    <span class="videoprogress-video-content__play" aria-hidden="true">▶</span>
+                </button>
+            </li>
+        {{/contentpoints}}
+    </ol>
+</aside>

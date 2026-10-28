@@ -1,0 +1,134 @@
+/* Estilos del Bloque IOMAD Categorías y Cursos */
+
+.block_iomad_category_courses {
+    margin-bottom: 2rem;
+}
+
+.block_iomad_category_courses .card-category {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: #ffffff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.block_iomad_category_courses .card-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.block_iomad_category_courses .category-banner {
+    height: 140px;
+    width: 100%;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.block_iomad_category_courses .category-banner.no-image {
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.2) 100%);
+}
+
+.block_iomad_category_courses .category-initials {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.block_iomad_category_courses .badge-count {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+}
+
+.block_iomad_category_courses .badge-shared {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(13, 110, 253, 0.85);
+    color: #ffffff;
+    padding: 0.3rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+}
+
+.block_iomad_category_courses .category-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+    line-height: 1.35;
+}
+
+.block_iomad_category_courses .btn-category-action {
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.55rem 1rem;
+    transition: all 0.2s ease;
+}
+
+/* Pantalla View */
+.block_iomad_category_courses_view .header-banner {
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.block_iomad_category_courses_view .header-banner.has-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.75) 100%);
+    z-index: 1;
+}
+
+.block_iomad_category_courses_view .header-banner > * {
+    position: relative;
+    z-index: 2;
+}
+
+.block_iomad_category_courses_view .card-course {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.block_iomad_category_courses_view .card-course:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+.block_iomad_category_courses_view .course-banner {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+}

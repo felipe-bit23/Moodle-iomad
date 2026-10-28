@@ -1,0 +1,1482 @@
+/* ==========================================================================
+   local_iomadtransfer - Modern SaaS Product Design System (v1.4.0)
+   Aesthetic: Linear / Stripe / Vercel (Refined Indigo, Slate & Pure Surfaces)
+   Strictly scoped under .local-iomadtransfer to prevent any Moodle/Trema bleed.
+   ========================================================================== */
+
+.local-iomadtransfer {
+    /* Cohesive SaaS Color Tokens */
+    --it-accent: #4f46e5;
+    --it-accent-hover: #4338ca;
+    --it-accent-soft: #eef2ff;
+    --it-accent-border: #c7d2fe;
+    --it-accent-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #7c3aed 100%);
+    --it-dark: #0f172a;
+    --it-dark-hover: #1e293b;
+    --it-canvas: #f8fafc;
+    --it-surface: #ffffff;
+    --it-surface-subtle: #f8fafc;
+    --it-surface-muted: #f1f5f9;
+    --it-border: #e2e8f0;
+    --it-border-subtle: rgba(15, 23, 42, 0.07);
+    --it-text-primary: #0f172a;
+    --it-text-secondary: #475569;
+    --it-text-muted: #64748b;
+    --it-text-subtle: #94a3b8;
+
+    /* Semantic Status Tokens */
+    --it-emerald: #059669;
+    --it-emerald-bg: #ecfdf5;
+    --it-emerald-border: #a7f3d0;
+    --it-amber: #d97706;
+    --it-amber-bg: #fffbeb;
+    --it-amber-border: #fde68a;
+    --it-rose: #e11d48;
+    --it-rose-bg: #fff1f2;
+    --it-rose-border: #fecdd3;
+    --it-sky: #0284c7;
+    --it-sky-bg: #f0f9ff;
+    --it-sky-border: #bae6fd;
+
+    /* Legacy compatibility aliases */
+    --ct-magenta: var(--it-accent);
+    --ct-magenta-hover: var(--it-accent-hover);
+    --ct-magenta-light: var(--it-accent-soft);
+    --ct-magenta-border: var(--it-accent-border);
+    --ct-primary: var(--it-accent);
+    --ct-primary-hover: var(--it-accent-hover);
+    --ct-primary-light: var(--it-accent-soft);
+    --ct-primary-border: var(--it-accent-border);
+    --ct-text-main: var(--it-text-primary);
+    --ct-text-muted: var(--it-text-muted);
+    --ct-border: var(--it-border);
+    --ct-surface: var(--it-surface);
+    --ct-surface-alt: var(--it-surface-subtle);
+
+    /* Radii & Diffused Shadows */
+    --it-radius-xs: 6px;
+    --it-radius-sm: 10px;
+    --it-radius-md: 14px;
+    --it-radius-lg: 18px;
+    --it-radius-pill: 9999px;
+    --it-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.03);
+    --it-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+    --it-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 12px 28px -4px rgba(15, 23, 42, 0.07);
+    --it-shadow-glow: 0 4px 14px rgba(79, 70, 229, 0.25);
+
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--it-text-primary);
+    line-height: 1.5;
+    max-width: 1320px;
+    margin: 0.5rem auto 2.5rem auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.local-iomadtransfer *,
+.local-iomadtransfer *::before,
+.local-iomadtransfer *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   1. App Shell & Unified Top Navigation Dock
+   ========================================================================== */
+.local-iomadtransfer .ct-card {
+    background: var(--it-canvas);
+    border: 1px solid var(--it-border);
+    border-radius: 22px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: var(--it-shadow-sm);
+}
+
+.local-iomadtransfer .it-topbar {
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-lg);
+    padding: 0.9rem 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    box-shadow: var(--it-shadow-xs);
+}
+
+.local-iomadtransfer .it-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.local-iomadtransfer .it-brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--it-accent-gradient);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    box-shadow: var(--it-shadow-glow);
+    flex-shrink: 0;
+}
+
+.local-iomadtransfer .it-brand-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.local-iomadtransfer .it-brand-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.local-iomadtransfer .it-brand-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--it-radius-pill);
+    background: var(--it-accent-soft);
+    color: var(--it-accent);
+    border: 1px solid var(--it-accent-border);
+}
+
+.local-iomadtransfer .it-brand-subtitle {
+    font-size: 0.8rem;
+    color: var(--it-text-muted);
+    margin: 0.1rem 0 0 0;
+}
+
+/* Segmented Navigation Dock */
+.local-iomadtransfer .it-nav-dock {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--it-surface-muted);
+    padding: 0.3rem;
+    border-radius: 12px;
+    border: 1px solid rgba(15, 23, 42, 0.04);
+    flex-wrap: wrap;
+}
+
+.local-iomadtransfer .it-nav-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.42rem 0.9rem;
+    border-radius: 9px;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--it-text-secondary) !important;
+    text-decoration: none !important;
+    transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.local-iomadtransfer .it-nav-tab i {
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
+.local-iomadtransfer .it-nav-tab:hover {
+    color: var(--it-text-primary) !important;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.local-iomadtransfer .it-nav-tab.is-active {
+    background: var(--it-surface);
+    color: var(--it-accent) !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.local-iomadtransfer .it-nav-tab.is-active i {
+    opacity: 1;
+    color: var(--it-accent);
+}
+
+.local-iomadtransfer .it-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   2. SaaS Buttons & Micro-Interactions
+   ========================================================================== */
+.local-iomadtransfer .ct-btn-primary {
+    background: var(--it-accent-gradient);
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 0.52rem 1.15rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    text-decoration: none !important;
+    box-shadow: var(--it-shadow-glow);
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.local-iomadtransfer .ct-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+    filter: brightness(1.04);
+}
+
+.local-iomadtransfer .ct-btn-secondary {
+    background: var(--it-surface);
+    color: var(--it-text-primary) !important;
+    border: 1px solid var(--it-border);
+    border-radius: 10px;
+    padding: 0.48rem 1rem;
+    font-weight: 600;
+    font-size: 0.84rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42rem;
+    cursor: pointer;
+    text-decoration: none !important;
+    box-shadow: var(--it-shadow-xs);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.local-iomadtransfer .ct-btn-secondary:hover {
+    background: var(--it-surface-subtle);
+    border-color: #cbd5e1;
+    transform: translateY(-0.5px);
+}
+
+.local-iomadtransfer .ct-btn-danger-outline {
+    background: var(--it-surface);
+    color: var(--it-rose) !important;
+    border: 1px solid var(--it-rose-border);
+    border-radius: 10px;
+    padding: 0.48rem 1rem;
+    font-weight: 600;
+    font-size: 0.84rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42rem;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: all 0.15s ease;
+}
+
+.local-iomadtransfer .ct-btn-danger-outline:hover {
+    background: var(--it-rose-bg);
+}
+
+.local-iomadtransfer .ct-btn-icon-square {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--it-border);
+    background: var(--it-surface);
+    color: var(--it-text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: all 0.15s ease;
+}
+
+.local-iomadtransfer .ct-btn-icon-square:hover {
+    background: var(--it-surface-subtle);
+    color: var(--it-text-primary);
+    border-color: #cbd5e1;
+}
+
+.local-iomadtransfer .ct-btn-icon-square.is-test:hover {
+    background: var(--it-accent-soft);
+    color: var(--it-accent);
+    border-color: var(--it-accent-border);
+}
+
+.local-iomadtransfer .ct-btn-icon-square.is-delete:hover {
+    background: var(--it-rose-bg);
+    color: var(--it-rose);
+    border-color: var(--it-rose-border);
+}
+
+/* ==========================================================================
+   3. Developer API Token Vault (Stripe / Vercel Key Card)
+   ========================================================================== */
+.local-iomadtransfer .it-vault-card {
+    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+    color: #f8fafc;
+    border-radius: var(--it-radius-lg);
+    padding: 1.65rem 1.85rem;
+    margin-bottom: 1.75rem;
+    box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.local-iomadtransfer .it-vault-card::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(99, 102, 241, 0) 70%);
+    pointer-events: none;
+}
+
+.local-iomadtransfer .it-vault-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.local-iomadtransfer .it-vault-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.local-iomadtransfer .it-vault-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    color: #a5b4fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.local-iomadtransfer .it-vault-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.2rem 0;
+    letter-spacing: -0.015em;
+}
+
+.local-iomadtransfer .it-vault-desc {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin: 0;
+    max-width: 680px;
+}
+
+.local-iomadtransfer .it-vault-key-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.local-iomadtransfer .it-vault-input-wrap {
+    position: relative;
+    flex: 1 1 320px;
+    display: flex;
+    align-items: center;
+}
+
+.local-iomadtransfer .it-vault-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 3rem 0 2.65rem;
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 10px;
+    color: #e2e8f0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.92rem;
+    letter-spacing: 0.06em;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.local-iomadtransfer .it-vault-input:focus {
+    border-color: #818cf8;
+}
+
+.local-iomadtransfer .it-vault-lock {
+    position: absolute;
+    left: 1rem;
+    color: #64748b;
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+.local-iomadtransfer .it-vault-eye {
+    position: absolute;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0.3rem;
+    font-size: 1rem;
+    transition: color 0.15s ease;
+}
+
+.local-iomadtransfer .it-vault-eye:hover {
+    color: #ffffff;
+}
+
+.local-iomadtransfer .it-vault-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0.95rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.local-iomadtransfer .it-vault-btn-ghost {
+    background: rgba(255, 255, 255, 0.07);
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 0.38rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.15s ease;
+}
+
+.local-iomadtransfer .it-vault-btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff !important;
+}
+
+/* ==========================================================================
+   4. Bento System Health & KPI Grids
+   ========================================================================== */
+.local-iomadtransfer .it-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 1rem 0;
+}
+
+.local-iomadtransfer .it-section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    letter-spacing: -0.01em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.local-iomadtransfer .ct-status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.local-iomadtransfer .ct-status-card {
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-md);
+    padding: 1rem 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+    box-shadow: var(--it-shadow-xs);
+    transition: all 0.18s ease;
+}
+
+.local-iomadtransfer .ct-status-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--it-shadow-md);
+    border-color: #cbd5e1;
+}
+
+.local-iomadtransfer .ct-status-left {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 0;
+}
+
+.local-iomadtransfer .ct-status-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.local-iomadtransfer .ct-status-icon-box.is-green {
+    background: var(--it-emerald-bg);
+    color: var(--it-emerald);
+}
+
+.local-iomadtransfer .ct-status-icon-box.is-teal {
+    background: var(--it-sky-bg);
+    color: var(--it-sky);
+}
+
+.local-iomadtransfer .ct-status-icon-box.is-amber {
+    background: var(--it-amber-bg);
+    color: var(--it-amber);
+}
+
+.local-iomadtransfer .ct-status-icon-box.is-blue,
+.local-iomadtransfer .ct-status-icon-box.is-purple {
+    background: var(--it-accent-soft);
+    color: var(--it-accent);
+}
+
+.local-iomadtransfer .ct-status-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    margin-bottom: 0.15rem;
+}
+
+.local-iomadtransfer .ct-status-state {
+    font-size: 0.78rem;
+    color: var(--it-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.local-iomadtransfer .ct-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--it-emerald);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.local-iomadtransfer .ct-status-dot.is-error {
+    background: var(--it-rose);
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+}
+
+.local-iomadtransfer .ct-status-dot.is-warning {
+    background: var(--it-amber);
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+}
+
+.local-iomadtransfer .ct-status-action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--it-border);
+    background: var(--it-surface-subtle);
+    color: var(--it-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    text-decoration: none !important;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.local-iomadtransfer .ct-status-action-btn:hover {
+    background: var(--it-accent-soft);
+    color: var(--it-accent);
+    border-color: var(--it-accent-border);
+}
+
+/* KPI Ribbon */
+.local-iomadtransfer .ct-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.local-iomadtransfer .ct-kpi-card {
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-md);
+    padding: 1rem 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    box-shadow: var(--it-shadow-xs);
+}
+
+.local-iomadtransfer .ct-kpi-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+.local-iomadtransfer .ct-kpi-icon.is-magenta,
+.local-iomadtransfer .ct-kpi-icon.is-indigo,
+.local-iomadtransfer .ct-kpi-icon.is-blue {
+    background: var(--it-accent-soft);
+    color: var(--it-accent);
+}
+
+.local-iomadtransfer .ct-kpi-icon.is-green {
+    background: var(--it-emerald-bg);
+    color: var(--it-emerald);
+}
+
+.local-iomadtransfer .ct-kpi-icon.is-amber {
+    background: var(--it-amber-bg);
+    color: var(--it-amber);
+}
+
+.local-iomadtransfer .ct-kpi-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--it-text-primary);
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+.local-iomadtransfer .ct-kpi-label {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--it-text-muted);
+    margin-top: 0.15rem;
+}
+
+/* ==========================================================================
+   5. Connected Nodes Grid (sites.php)
+   ========================================================================== */
+.local-iomadtransfer .it-nodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.local-iomadtransfer .it-node-card {
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    box-shadow: var(--it-shadow-xs);
+    transition: all 0.18s ease;
+}
+
+.local-iomadtransfer .it-node-card:hover {
+    box-shadow: var(--it-shadow-md);
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+.local-iomadtransfer .it-node-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.local-iomadtransfer .it-node-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 0;
+}
+
+.local-iomadtransfer .it-node-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: var(--it-accent-soft);
+    border: 1px solid var(--it-accent-border);
+    color: var(--it-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.local-iomadtransfer .it-node-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    margin: 0 0 0.15rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.local-iomadtransfer .it-node-host {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.78rem;
+    color: var(--it-text-muted);
+    background: var(--it-surface-subtle);
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--it-border-subtle);
+    display: inline-block;
+}
+
+.local-iomadtransfer .it-node-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--it-surface-muted);
+}
+
+.local-iomadtransfer .it-node-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   6. Interactive Course Studio & 3-Step Wizard (consolidate.php)
+   ========================================================================== */
+.local-iomadtransfer .it-studio-surface {
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-lg);
+    padding: 1.5rem 1.75rem;
+    box-shadow: var(--it-shadow-xs);
+}
+
+.local-iomadtransfer .ct-stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--it-surface-subtle);
+    border: 1px solid var(--it-border);
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--it-radius-pill);
+    margin: 0 0 1.5rem 0;
+}
+
+.local-iomadtransfer .ct-step-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.local-iomadtransfer .ct-step-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--it-surface);
+    border: 1.5px solid #cbd5e1;
+    color: var(--it-text-muted);
+}
+
+.local-iomadtransfer .ct-step-item.is-active .ct-step-number {
+    background: var(--it-accent);
+    border-color: var(--it-accent);
+    color: #ffffff;
+    box-shadow: 0 0 0 3px var(--it-accent-soft);
+}
+
+.local-iomadtransfer .ct-step-item.is-done .ct-step-number {
+    background: var(--it-emerald);
+    border-color: var(--it-emerald);
+    color: #ffffff;
+}
+
+.local-iomadtransfer .ct-step-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--it-text-muted);
+}
+
+.local-iomadtransfer .ct-step-item.is-active .ct-step-label {
+    color: var(--it-text-primary);
+    font-weight: 700;
+}
+
+.local-iomadtransfer .ct-step-connector {
+    width: 24px;
+    height: 1.5px;
+    background: #cbd5e1;
+    margin: 0 0.2rem;
+}
+
+/* Interactive Course Card Picker (Replaces ugly <select size="6">) */
+.local-iomadtransfer .it-course-picker {
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-md);
+    background: var(--it-surface-subtle);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.local-iomadtransfer .it-course-picker-header {
+    padding: 0.75rem 1rem;
+    background: var(--it-surface);
+    border-bottom: 1px solid var(--it-border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.local-iomadtransfer .it-course-search {
+    width: 100%;
+    height: 38px;
+    padding: 0 0.9rem;
+    border: 1px solid var(--it-border);
+    border-radius: 8px;
+    font-size: 0.86rem;
+    background: var(--it-surface-subtle);
+    color: var(--it-text-primary);
+    outline: none;
+    transition: all 0.15s ease;
+}
+
+.local-iomadtransfer .it-course-search:focus {
+    background: var(--it-surface);
+    border-color: var(--it-accent);
+    box-shadow: 0 0 0 3px var(--it-accent-soft);
+}
+
+.local-iomadtransfer .it-course-list {
+    max-height: 290px;
+    overflow-y: auto;
+    padding: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.local-iomadtransfer .it-course-item {
+    background: var(--it-surface);
+    border: 1.5px solid var(--it-border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.local-iomadtransfer .it-course-item:hover {
+    border-color: #94a3b8;
+    transform: translateX(2px);
+}
+
+.local-iomadtransfer .it-course-item.is-selected {
+    border-color: var(--it-accent);
+    background: var(--it-accent-soft);
+    box-shadow: 0 0 0 1px var(--it-accent);
+}
+
+.local-iomadtransfer .it-course-item-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-width: 0;
+}
+
+.local-iomadtransfer .it-course-radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #cbd5e1;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+
+.local-iomadtransfer .it-course-item.is-selected .it-course-radio {
+    border-color: var(--it-accent);
+    background: var(--it-accent);
+}
+
+.local-iomadtransfer .it-course-item.is-selected .it-course-radio::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.local-iomadtransfer .it-course-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    margin: 0;
+}
+
+.local-iomadtransfer .it-course-sub {
+    font-size: 0.76rem;
+    color: var(--it-text-muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.local-iomadtransfer .it-course-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 3-Column Mode Cards */
+.local-iomadtransfer .it-mode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.local-iomadtransfer .ct-option-card {
+    border: 1.5px solid var(--it-border);
+    border-radius: var(--it-radius-md);
+    padding: 1.05rem 1.2rem;
+    margin-bottom: 0;
+    cursor: pointer;
+    background: var(--it-surface);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    transition: all 0.16s ease;
+}
+
+.local-iomadtransfer .ct-option-card:hover {
+    border-color: #94a3b8;
+}
+
+.local-iomadtransfer .ct-option-card.is-selected {
+    border-color: var(--it-accent);
+    background: var(--it-accent-soft);
+    box-shadow: 0 0 0 1px var(--it-accent);
+}
+
+.local-iomadtransfer .ct-option-card input[type="checkbox"],
+.local-iomadtransfer .ct-option-card input[type="radio"] {
+    margin-top: 0.2rem;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--it-accent);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.local-iomadtransfer .ct-option-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    margin-bottom: 0.2rem;
+}
+
+.local-iomadtransfer .ct-option-desc {
+    font-size: 0.8rem;
+    color: var(--it-text-secondary);
+    margin: 0;
+    line-height: 1.45;
+}
+
+/* ==========================================================================
+   7. Deployment & Consolidation Activity Stream (logs.php)
+   ========================================================================== */
+.local-iomadtransfer .it-stream-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.local-iomadtransfer .it-stream-card {
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-md);
+    padding: 1.1rem 1.3rem;
+    box-shadow: var(--it-shadow-xs);
+    transition: all 0.16s ease;
+}
+
+.local-iomadtransfer .it-stream-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: var(--it-shadow-sm);
+}
+
+.local-iomadtransfer .it-stream-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.local-iomadtransfer .it-stream-id-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.local-iomadtransfer .it-stream-id {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    background: var(--it-surface-muted);
+    padding: 0.18rem 0.55rem;
+    border-radius: 6px;
+}
+
+.local-iomadtransfer .it-stream-pipeline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.75rem 0.95rem;
+    background: var(--it-surface-subtle);
+    border: 1px solid var(--it-border-subtle);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+}
+
+.local-iomadtransfer .it-stream-route {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.local-iomadtransfer .it-stream-arrow {
+    color: var(--it-text-subtle);
+    font-size: 0.85rem;
+}
+
+.local-iomadtransfer .it-stream-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* Badges & Metric Chips */
+.local-iomadtransfer .it-badge-success,
+.local-iomadtransfer .it-badge-info,
+.local-iomadtransfer .it-badge-warning,
+.local-iomadtransfer .it-badge-danger,
+.local-iomadtransfer .ct-pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.22rem 0.65rem;
+    border-radius: var(--it-radius-pill);
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.local-iomadtransfer .it-badge-success,
+.local-iomadtransfer .ct-pill-badge.is-connected {
+    background: var(--it-emerald-bg) !important;
+    color: var(--it-emerald) !important;
+    border: 1px solid var(--it-emerald-border);
+}
+
+.local-iomadtransfer .it-badge-info {
+    background: var(--it-sky-bg) !important;
+    color: var(--it-sky) !important;
+    border: 1px solid var(--it-sky-border);
+}
+
+.local-iomadtransfer .it-badge-warning,
+.local-iomadtransfer .ct-pill-badge.is-pending {
+    background: var(--it-amber-bg) !important;
+    color: var(--it-amber) !important;
+    border: 1px solid var(--it-amber-border);
+}
+
+.local-iomadtransfer .it-badge-danger,
+.local-iomadtransfer .ct-pill-badge.is-error {
+    background: var(--it-rose-bg) !important;
+    color: var(--it-rose) !important;
+    border: 1px solid var(--it-rose-border);
+}
+
+.local-iomadtransfer .ct-metric-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 7px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    background: var(--it-surface-subtle);
+    color: var(--it-text-secondary);
+    border: 1px solid var(--it-border);
+}
+
+.local-iomadtransfer .ct-metric-chip.is-users {
+    background: var(--it-emerald-bg);
+    color: var(--it-emerald);
+    border-color: var(--it-emerald-border);
+}
+
+.local-iomadtransfer .ct-metric-chip.is-company {
+    background: var(--it-sky-bg);
+    color: var(--it-sky);
+    border-color: var(--it-sky-border);
+}
+
+.local-iomadtransfer .ct-metric-chip.is-group,
+.local-iomadtransfer .ct-metric-chip.is-grades {
+    background: var(--it-accent-soft);
+    color: var(--it-accent);
+    border-color: var(--it-accent-border);
+}
+
+.local-iomadtransfer .ct-metric-chip.is-zero-warn {
+    background: var(--it-amber-bg);
+    color: var(--it-amber);
+    border-color: var(--it-amber-border);
+}
+
+.local-iomadtransfer .ct-direction-badge {
+    background: var(--it-surface-muted);
+    color: var(--it-text-secondary);
+    padding: 0.18rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.73rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+}
+
+.local-iomadtransfer .ct-direction-badge.is-active {
+    background: var(--it-accent-soft);
+    color: var(--it-accent);
+    border: 1px solid var(--it-accent-border);
+}
+
+.local-iomadtransfer .ct-platform-iomad-comp {
+    color: var(--it-accent);
+    background: var(--it-accent-soft);
+    border: 1px solid var(--it-accent-border);
+    padding: 0.18rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Subtle SaaS Info Banner (Replaces yellow bureaucratic callout) */
+.local-iomadtransfer .ct-callout-info {
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-left: 3.5px solid var(--it-accent);
+    border-radius: var(--it-radius-sm);
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--it-text-secondary);
+    box-shadow: var(--it-shadow-xs);
+}
+
+.local-iomadtransfer .ct-callout-info i {
+    font-size: 1.05rem;
+    color: var(--it-accent);
+    flex-shrink: 0;
+}
+
+/* Filter Bar & Inputs */
+.local-iomadtransfer .ct-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-md);
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--it-shadow-xs);
+}
+
+.local-iomadtransfer .ct-filter-input,
+.local-iomadtransfer .ct-token-input {
+    height: 40px;
+    padding: 0 0.9rem;
+    border: 1px solid var(--it-border);
+    border-radius: 9px;
+    font-size: 0.86rem;
+    background: var(--it-surface-subtle);
+    color: var(--it-text-primary);
+    outline: none;
+    transition: all 0.15s ease;
+}
+
+.local-iomadtransfer .ct-filter-input {
+    flex: 1 1 240px;
+}
+
+.local-iomadtransfer .ct-filter-input:focus,
+.local-iomadtransfer .ct-token-input:focus,
+.local-iomadtransfer .ct-filter-select:focus {
+    background: var(--it-surface);
+    border-color: var(--it-accent);
+    box-shadow: 0 0 0 3px var(--it-accent-soft);
+}
+
+.local-iomadtransfer .ct-filter-select {
+    height: 40px;
+    padding: 0 0.85rem;
+    border: 1px solid var(--it-border);
+    border-radius: 9px;
+    font-size: 0.85rem;
+    background: var(--it-surface-subtle);
+    color: var(--it-text-primary);
+    outline: none;
+}
+
+/* Step 3 Summary Confirmation Grid */
+.local-iomadtransfer .ct-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.local-iomadtransfer .ct-summary-item {
+    background: var(--it-surface-subtle);
+    border: 1px solid var(--it-border);
+    border-radius: var(--it-radius-md);
+    padding: 1rem 1.15rem;
+}
+
+.local-iomadtransfer .ct-summary-label {
+    font-size: 0.73rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--it-text-muted);
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.local-iomadtransfer .ct-summary-value {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    word-break: break-word;
+}
+
+/* Discreet SaaS Footer Bar */
+.local-iomadtransfer .it-footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--it-border);
+    font-size: 0.78rem;
+    color: var(--it-text-muted);
+}
+
+.local-iomadtransfer .it-footer-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.local-iomadtransfer .it-footer-links a {
+    color: var(--it-text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+
+.local-iomadtransfer .it-footer-links a:hover,
+.local-iomadtransfer .it-footer-links a.is-active {
+    color: var(--it-accent);
+}
+
+/* ==========================================================================
+   11. Expandable "Ver más detalles" Audit Drawer & CustomCert Verification
+   ========================================================================== */
+.local-iomadtransfer .it-details-drawer {
+    margin-top: 0.9rem;
+    padding-top: 0.95rem;
+    border-top: 1px dashed var(--it-border);
+    animation: itDrawerFadeIn 0.18s ease-out;
+}
+
+@keyframes itDrawerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.local-iomadtransfer .it-drawer-metrics-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.42rem;
+    margin-bottom: 0.85rem;
+}
+
+.local-iomadtransfer .it-drawer-audit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 0.75rem;
+}
+
+.local-iomadtransfer .it-drawer-subcard {
+    background: var(--it-surface-subtle);
+    border: 1px solid var(--it-border);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+}
+
+.local-iomadtransfer .it-drawer-subtitle {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--it-text-primary);
+    margin-bottom: 0.45rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.local-iomadtransfer .it-cert-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding: 0.35rem 0.55rem;
+    background: var(--it-surface);
+    border: 1px solid var(--it-border-subtle);
+    border-radius: 8px;
+    font-size: 0.76rem;
+}
+
+.local-iomadtransfer .it-cert-code-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.16rem 0.55rem;
+    border-radius: 9999px;
+    background: var(--it-emerald-bg);
+    color: var(--it-emerald) !important;
+    border: 1px solid var(--it-emerald-border);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.15s ease;
+}
+
+.local-iomadtransfer .it-cert-code-badge:hover {
+    background: #d1fae5;
+    transform: translateY(-0.5px);
+}
+
+.local-iomadtransfer .it-audit-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    background: var(--it-surface);
+    border: 1px solid var(--it-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.local-iomadtransfer .it-audit-table th {
+    background: var(--it-surface-muted);
+    color: var(--it-text-secondary);
+    font-weight: 700;
+    text-align: left;
+    padding: 0.48rem 0.65rem;
+    border-bottom: 1px solid var(--it-border);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.local-iomadtransfer .it-audit-table td {
+    padding: 0.48rem 0.65rem;
+    border-bottom: 1px solid var(--it-surface-muted);
+    color: var(--it-text-primary);
+    vertical-align: middle;
+}
+
+.local-iomadtransfer .it-audit-table tr:last-child td {
+    border-bottom: none;
+}

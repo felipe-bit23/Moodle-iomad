@@ -1,0 +1,43 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template videoprogressmaterial_image/view
+
+    Example context (json):
+    {
+        "name": "Infográfico da aula",
+        "hasfile": true,
+        "imageurl": "/pluginfile.php/10/videoprogressmaterial_image/image/7/infografico.png",
+        "alttext": "Fluxo do processo apresentado no vídeo",
+        "allowdownload": true,
+        "downloadurl": "/pluginfile.php/10/videoprogressmaterial_image/image/7/infografico.png?forcedownload=1"
+    }
+}}
+<section class="videoprogress-material-view videoprogress-material-view--image">
+    <header class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+        <h3 class="mb-0">{{{name}}}</h3>
+        {{#allowdownload}}
+            <a class="btn btn-outline-primary" href="{{{downloadurl}}}">{{#str}}download, videoprogressmaterial_image{{/str}}</a>
+        {{/allowdownload}}
+    </header>
+    {{#hasfile}}
+        <img src="{{{imageurl}}}" alt="{{{alttext}}}" class="img-fluid rounded border">
+    {{/hasfile}}
+    {{^hasfile}}
+        <div class="alert alert-info">{{#str}}nofile, videoprogressmaterial_image{{/str}}</div>
+    {{/hasfile}}
+</section>

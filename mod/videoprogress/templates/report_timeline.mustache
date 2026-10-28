@@ -1,0 +1,90 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/report_timeline
+
+    Example context (json):
+    {
+        "hasaggregateddata": true,
+        "aggregatetimeline": [
+            {
+                "level": 2,
+                "tooltip": "00:00–00:10"
+            },
+            {
+                "level": 4,
+                "tooltip": "00:10–00:20"
+            }
+        ],
+        "insights": {
+            "mostwatched": {
+                "range": "00:10–00:20",
+                "views": 18
+            },
+            "leastwatched": {
+                "range": "09:40–09:50",
+                "views": 3
+            },
+            "dropoff": {
+                "range": "06:20–06:30",
+                "views": 5
+            }
+        }
+    }
+}}
+
+<section class="videoprogress-report-timeline" aria-labelledby="videoprogress-mostwatched-heading">
+    <div class="videoprogress-section-heading">
+        <h3 id="videoprogress-mostwatched-heading">{{#str}} mostwatchedmoments, videoprogress {{/str}}</h3>
+        <p>{{#str}} mostwatchedhelp, videoprogress {{/str}}</p>
+    </div>
+    {{#hasaggregateddata}}
+        <div class="videoprogress-timeline is-aggregate" role="img"
+             aria-label="{{#str}} reporttimelineaccessible, videoprogress {{/str}}">
+            {{#aggregatetimeline}}
+                <span class="videoprogress-timeline__bucket level-{{{level}}}" tabindex="0"
+                      title="{{{tooltip}}}"></span>
+            {{/aggregatetimeline}}
+        </div>
+        <div class="videoprogress-insights">
+            {{#insights.mostwatched}}
+                <article>
+                    <span>{{#str}}mostwatchedsection, videoprogress {{/str}}</span>
+                    <h3>{{{range}}}</h3>
+                    <small>{{#str}}viewsamount, videoprogress, {{{views}}} {{/str}}</small>
+                </article>
+            {{/insights.mostwatched}}
+            {{#insights.leastwatched}}
+                <article>
+                    <span>{{#str}}leastwatchedsection, videoprogress {{/str}}</span>
+                    <h3>{{{range}}}</h3>
+                    <small>{{#str}}viewsamount, videoprogress, {{{views}}} {{/str}}</small>
+                </article>
+            {{/insights.leastwatched}}
+            {{#insights.dropoff}}
+                <article>
+                    <span>{{#str}}largestdropoff, videoprogress {{/str}}</span>
+                    <h3>{{{range}}}</h3>
+                    <small>{{#str}}viewdrop, videoprogress, {{{views}}} {{/str}}</small>
+                </article>
+            {{/insights.dropoff}}
+        </div>
+    {{/hasaggregateddata}}
+    {{^hasaggregateddata}}
+        <p class="videoprogress-muted-panel">{{#str}} noanalyticsyet, videoprogress {{/str}}</p>
+    {{/hasaggregateddata}}
+</section>

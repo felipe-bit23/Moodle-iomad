@@ -1,0 +1,34 @@
+<div class="block_iomad_category_courses container-fluid px-0">
+    <div class="row g-4">
+        {{#categories}}
+        <div class="{{colclass}}">
+            <div class="card card-category h-100">
+                {{#hasimage}}
+                <div class="category-banner has-image" style="background-image: url('{{imageurl}}');">
+                    {{#isshared}}
+                    <span class="badge-shared"><i class="fa fa-share-alt" aria-hidden="true"></i> Compartido</span>
+                    {{/isshared}}
+                    <span class="badge-count">{{coursecount}} {{#str}} courses, moodle {{/str}}</span>
+                </div>
+                {{/hasimage}}
+                {{^hasimage}}
+                <div class="category-banner no-image" style="background-color: {{color}};">
+                    {{#isshared}}
+                    <span class="badge-shared"><i class="fa fa-share-alt" aria-hidden="true"></i> Compartido</span>
+                    {{/isshared}}
+                    <span class="category-initials">{{initials}}</span>
+                    <span class="badge-count">{{coursecount}} {{#str}} courses, moodle {{/str}}</span>
+                </div>
+                {{/hasimage}}
+
+                <div class="card-body d-flex flex-column justify-content-between p-3">
+                    <h5 class="category-title text-truncate" title="{{name}}">{{name}}</h5>
+                    <a href="{{url}}" class="btn btn-primary btn-category-action w-100 text-center mt-2">
+                        {{#str}} viewcategoryandcourses, block_iomad_category_courses {{/str}} <i class="fa fa-chevron-right ms-1" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/categories}}
+    </div>
+</div>

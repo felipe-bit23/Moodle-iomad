@@ -1,0 +1,14 @@
+{
+  "subplugintypes": {
+    "videoprogressmaterial": "material",
+    "videoprogresscontent": "content",
+    "videoprogressobjective": "objective",
+    "videoprogresssource": "source"
+  },
+  "plugintypes": {
+    "videoprogressmaterial": "mod/videoprogress/material",
+    "videoprogresscontent": "mod/videoprogress/content",
+    "videoprogressobjective": "mod/videoprogress/objective",
+    "videoprogresssource": "mod/videoprogress/source"
+  }
+}

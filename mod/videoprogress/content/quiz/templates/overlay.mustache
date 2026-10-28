@@ -1,0 +1,54 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template videoprogresscontent_quiz/overlay
+
+    Example context (json):
+    {
+        "itemid": 16,
+        "pointtitle": "Pergunta rápida",
+        "question": "<p>Qual alternativa está correta?</p>",
+        "answers": [
+            {
+                "index": 0,
+                "number": "A",
+                "text": "Primeira alternativa"
+            },
+            {
+                "index": 1,
+                "number": "B",
+                "text": "Segunda alternativa"
+            }
+        ]
+    }
+}}
+
+<section class="videoprogress-content-overlay videoprogress-content-overlay--quiz" data-content-item="{{itemid}}"
+         hidden>
+    <div class="videoprogress-content-overlay__panel">
+        <h3>{{{pointtitle}}}</h3>
+        <div class="videoprogress-content-overlay__body">{{{question}}}</div>
+        <div class="videoprogress-quiz-answers">
+            {{#answers}}
+                <button type="button" class="videoprogress-quiz-answer" data-answer="{{index}}">
+                    <span>{{{number}}}</span>{{{text}}}
+                </button>
+            {{/answers}}
+        </div>
+        <div class="videoprogress-content-overlay__feedback" data-region="interaction-feedback" role="status"></div>
+    </div>
+</section>

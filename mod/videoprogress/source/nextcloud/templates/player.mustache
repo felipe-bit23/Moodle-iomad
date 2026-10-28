@@ -1,0 +1,49 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template videoprogresssource_nextcloud/player
+
+    Example context (json):
+    {
+        "player": {
+            "poster": "https://example.test/poster.jpg",
+            "disabledownload": false,
+            "disablepip": false,
+            "url": "https://cloud.example.test/index.php/s/ShareToken/download",
+            "captions": [
+                {
+                    "url": "https://example.test/captions.vtt",
+                    "language": "pt-BR",
+                    "label": "Português",
+                    "isdefault": true
+                }
+            ]
+        }
+    }
+}}
+
+<video class="videoprogress-player__video" data-region="html5-player" controls preload="metadata"
+       {{#player.poster}}poster="{{{player.poster}}}"{{/player.poster}}
+       {{#player.disabledownload}}controlslist="nodownload"{{/player.disabledownload}}
+       {{#player.disablepip}}disablepictureinpicture{{/player.disablepip}}>
+    <source src="{{{player.url}}}">
+    {{#player.captions}}
+        <track kind="subtitles" src="{{{url}}}" srclang="{{{language}}}" label="{{{label}}}"
+               {{#isdefault}}default{{/isdefault}}>
+    {{/player.captions}}
+    {{#str}} browservideonotsupported, videoprogress {{/str}}
+</video>

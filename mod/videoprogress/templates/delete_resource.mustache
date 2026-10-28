@@ -1,0 +1,41 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/delete_resource
+
+    Example context (json):
+    {
+        "title": "Excluir recurso",
+        "message": "Tem certeza de que deseja excluir este recurso?",
+        "actionurl": "/mod/videoprogress/material/delete.php?id=10&materialid=3",
+        "sesskey": "examplesesskey",
+        "returnurl": "/mod/videoprogress/materials.php?id=10"
+    }
+}}
+
+<div class="videoprogress-reset-confirmation">
+    <span class="videoprogress-reset-confirmation__icon" aria-hidden="true">!</span>
+    <h2>{{{title}}}</h2>
+    <p>{{{message}}}</p>
+    <form method="post" action="{{{actionurl}}}"><input type="hidden" name="confirmed" value="1"><input type="hidden"
+                                                                                                      name="sesskey"
+                                                                                                      value="{{{sesskey}}}">
+        <div class="videoprogress-reset-confirmation__actions">
+            <button type="submit" class="btn btn-danger">{{#str}} confirmdelete, videoprogress {{/str}}</button>
+            <a href="{{{returnurl}}}" class="btn btn-secondary">{{#str}} cancel, videoprogress {{/str}}</a></div>
+    </form>
+</div>

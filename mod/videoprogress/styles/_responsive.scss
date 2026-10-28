@@ -1,0 +1,134 @@
+@media (max-width: 1200px) {
+    .videoprogress-learning-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(250px, 300px);
+    }
+
+    .videoprogress-filters__form {
+        grid-template-columns: repeat(4, minmax(150px, 1fr));
+    }
+
+    .videoprogress-filter-search {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .videoprogress-learning-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .videoprogress-video-content {
+        position: static;
+    }
+
+    .videoprogress-manage__heading,
+    .videoprogress-manage-list article,
+    .videoprogress-point-editor > header,
+    .videoprogress-material-view--pdf header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .videoprogress-view__header,
+    .videoprogress-report__header,
+    .videoprogress-progress__header,
+    .videoprogress-progress__meta,
+    .videoprogress-section-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .videoprogress-filters__form {
+        grid-template-columns: 1fr;
+    }
+
+    .videoprogress-filter-search {
+        grid-column: auto;
+    }
+
+    .videoprogress-report-list {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        overflow: visible;
+    }
+
+    .videoprogress-students-table,
+    .videoprogress-students-table tbody,
+    .videoprogress-students-table tr,
+    .videoprogress-students-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .videoprogress-students-table thead {
+        clip: rect(0 0 0 0);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        width: 1px;
+    }
+
+    .videoprogress-students-table tr {
+        background: #fff;
+        border: 1px solid $videoprogress-border;
+        border-radius: $videoprogress-radius;
+        box-shadow: $videoprogress-shadow;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        padding: .55rem 1rem;
+    }
+
+    .videoprogress-students-table td {
+        align-items: center;
+        border-bottom: 1px solid #edf0f4;
+        display: flex;
+        justify-content: space-between;
+        padding: .8rem 0;
+        white-space: normal;
+    }
+
+    .videoprogress-students-table td::before {
+        color: $videoprogress-muted;
+        content: attr(data-label);
+        font-size: .75rem;
+        font-weight: 700;
+        margin-right: 1rem;
+    }
+
+    .videoprogress-students-table td:first-child {
+        display: block;
+    }
+
+    .videoprogress-students-table td:first-child::before {
+        display: none;
+    }
+
+    .videoprogress-students-table td:last-child {
+        border-bottom: 0;
+    }
+
+    .videoprogress-mini-map {
+        min-width: 45vw;
+    }
+
+    .videoprogress-row-actions {
+        justify-content: flex-end;
+    }
+
+    .videoprogress-pagination {
+        flex-wrap: wrap;
+    }
+
+    .videoprogress-caption-list article,
+    .videoprogress-index__list article {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .videoprogress-timeline__bucket {
+        transition: none;
+    }
+}

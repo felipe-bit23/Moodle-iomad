@@ -1,0 +1,68 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/progress
+
+    Example context (json):
+    {
+        "progress": {
+            "percentrounded": 72,
+            "percent": 72.4,
+            "watchedofduration": "07:12 / 10:00",
+            "requiredpercent": 80,
+            "completed": false,
+            "inprogress": true,
+            "notstarted": false
+        }
+    }
+}}
+
+<section class="videoprogress-progress" data-region="progress" aria-labelledby="videoprogress-progress-heading">
+    <div class="videoprogress-progress__header">
+        <div>
+            <h3 id="videoprogress-progress-heading">{{#str}} yourprogress, videoprogress {{/str}}</h3>
+            <p data-region="progress-text" class="{{#progress.notstarted}}d-none{{/progress.notstarted}}">
+                {{#str}} watchedpercent, videoprogress, {{{progress.percentrounded}}} {{/str}}
+            </p>
+        </div>
+        <strong class="videoprogress-progress__percent" data-region="percent">{{{progress.percentrounded}}}%</strong>
+    </div>
+    <div class="progress videoprogress-progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+         aria-valuenow="{{{progress.percentrounded}}}">
+        <div class="progress-bar" data-region="progress-bar" style="width: {{progress.percent}}%"></div>
+    </div>
+    <div class="videoprogress-progress__meta">
+        <span data-region="watched-duration" class="{{#progress.notstarted}}d-none{{/progress.notstarted}}">
+            {{{progress.watchedofduration}}}
+        </span>
+        <span>{{#str}} completionrequirement, videoprogress, {{{progress.requiredpercent}}} {{/str}}</span>
+    </div>
+    <div class="videoprogress-status">
+        {{#progress.completed}}
+            <span class="badge badge-success"
+                  data-region="completion-status">{{#str}}statuscompleted, videoprogress {{/str}}</span>
+        {{/progress.completed}}
+        {{#progress.inprogress}}
+            <span class="badge badge-info"
+                  data-region="completion-status">{{#str}}statusinprogress, videoprogress {{/str}}</span>
+        {{/progress.inprogress}}
+        {{#progress.notstarted}}
+            <span class="badge badge-secondary"
+                  data-region="completion-status">{{#str}}statusnotstarted, videoprogress {{/str}}</span>
+        {{/progress.notstarted}}
+    </div>
+</section>

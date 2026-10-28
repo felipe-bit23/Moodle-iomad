@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/videoprogress/db" VERSION="20260812" COMMENT="XMLDB file for Video Progress"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+    <TABLES>
+        <TABLE NAME="videoprogress" COMMENT="Video Progress activity settings">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="videosource" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="upload" SEQUENCE="false"/>
+                <FIELD NAME="videourl" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="sourceconfig" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="resumeplayback" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="allowseek" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="maxplaybackrate" TYPE="number" LENGTH="4" DECIMALS="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="disabledownload" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="disablepip" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="disablecontextmenu" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="completionpercent" TYPE="int" LENGTH="3" NOTNULL="true" DEFAULT="80" SEQUENCE="false"/>
+                <FIELD NAME="requireconfirmation" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="grade" TYPE="number" LENGTH="10" DECIMALS="5" NOTNULL="true" DEFAULT="100" SEQUENCE="false"/>
+                <FIELD NAME="aggregateviewmap" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="aggregateusermap" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="aggregateupdated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="course" TYPE="foreign" FIELDS="course" REFTABLE="course" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="course-source" UNIQUE="false" FIELDS="course,videosource"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="videoprogress_progress" COMMENT="Consolidated progress for each user and activity">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="videoprogressid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="duration" TYPE="number" LENGTH="12" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="lastposition" TYPE="number" LENGTH="12" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="uniquewatched" TYPE="number" LENGTH="12" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="totalwatchtime" TYPE="number" LENGTH="14" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="percent" TYPE="number" LENGTH="6" DECIMALS="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="watchedsegments" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="viewmap" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="completed" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="confirmation" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="confirmationtime" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="sequence" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="activity" TYPE="foreign" FIELDS="videoprogressid" REFTABLE="videoprogress" REFFIELDS="id"/>
+                <KEY NAME="user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="activity-user" UNIQUE="true" FIELDS="videoprogressid,userid"/>
+                <INDEX NAME="activity-status" UNIQUE="false" FIELDS="videoprogressid,completed"/>
+                <INDEX NAME="activity-percent" UNIQUE="false" FIELDS="videoprogressid,percent"/>
+                <INDEX NAME="activity-modified" UNIQUE="false" FIELDS="videoprogressid,timemodified"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="videoprogress_sessions" COMMENT="Minimal per-player tracking sessions">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="videoprogressid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="sessionkey" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="timestart" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timeend" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="watchtime" TYPE="number" LENGTH="12" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="startposition" TYPE="number" LENGTH="12" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="endposition" TYPE="number" LENGTH="12" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="lastposition" TYPE="number" LENGTH="12" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="sequence" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="lastheartbeat" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="lastclienttime" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="playerstate" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="paused" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="activity" TYPE="foreign" FIELDS="videoprogressid" REFTABLE="videoprogress" REFFIELDS="id"/>
+                <KEY NAME="user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="session-identity" UNIQUE="true" FIELDS="videoprogressid,userid,sessionkey"/>
+                <INDEX NAME="activity-user-time" UNIQUE="false" FIELDS="videoprogressid,userid,timestart"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="videoprogress_captions" COMMENT="Caption tracks and their publication state">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="videoprogressid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="language" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="label" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="isdefault" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="published" SEQUENCE="false"/>
+                <FIELD NAME="source" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="upload" SEQUENCE="false"/>
+                <FIELD NAME="sourceurl" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="createdby" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="activity" TYPE="foreign" FIELDS="videoprogressid" REFTABLE="videoprogress" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="activity-language" UNIQUE="false" FIELDS="videoprogressid,language"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="videoprogress_materials" COMMENT="Support materials attached through material subplugins">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="videoprogressid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="plugin" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="configdata" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="activity" TYPE="foreign" FIELDS="videoprogressid" REFTABLE="videoprogress" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="activity-order" UNIQUE="false" FIELDS="videoprogressid,sortorder"/>
+                <INDEX NAME="activity-plugin" UNIQUE="false" FIELDS="videoprogressid,plugin"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="videoprogress_objectives" COMMENT="Unlimited learning objectives attached through objective subplugins">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="videoprogressid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="plugin" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="configdata" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="activity" TYPE="foreign" FIELDS="videoprogressid" REFTABLE="videoprogress" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="activity-order" UNIQUE="false" FIELDS="videoprogressid,sortorder"/>
+                <INDEX NAME="activity-plugin" UNIQUE="false" FIELDS="videoprogressid,plugin"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="videoprogress_points" COMMENT="Named points on the video timeline">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="videoprogressid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="timepoint" TYPE="number" LENGTH="12" DECIMALS="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="activity" TYPE="foreign" FIELDS="videoprogressid" REFTABLE="videoprogress" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="activity-time" UNIQUE="false" FIELDS="videoprogressid,timepoint"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="videoprogress_pointitems" COMMENT="Subplugin items attached to video timeline points">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="pointid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="plugin" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="configdata" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="point" TYPE="foreign" FIELDS="pointid" REFTABLE="videoprogress_points" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="point-order" UNIQUE="false" FIELDS="pointid,sortorder"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="videoprogress_interactions" COMMENT="Per-user state for interactive video point items">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="itemid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="completed" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="attempts" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="lastresponse" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="timecompleted" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="item" TYPE="foreign" FIELDS="itemid" REFTABLE="videoprogress_pointitems" REFFIELDS="id"/>
+                <KEY NAME="user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="item-user" UNIQUE="true" FIELDS="itemid,userid"/>
+                <INDEX NAME="user-completed" UNIQUE="false" FIELDS="userid,completed"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>

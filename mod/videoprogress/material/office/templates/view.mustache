@@ -1,0 +1,54 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template videoprogressmaterial_office/view
+
+    Example context (json):
+    {
+        "name": "Apresentação da aula",
+        "filename": "aula.pptx",
+        "hasfile": true,
+        "haspreview": true,
+        "viewerurl": "https://docs.google.com/gview?embedded=1&url=https%3A%2F%2Fexample.com%2Fpreview.php",
+        "allowdownload": true,
+        "downloadurl": "/pluginfile.php/10/videoprogressmaterial_office/document/5/aula.pptx"
+    }
+}}
+<section class="videoprogress-material-view videoprogress-material-view--office">
+    <header class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+        <div>
+            <h3 class="mb-1">{{{name}}}</h3>
+            {{#filename}}<small class="text-muted">{{{filename}}}</small>{{/filename}}
+        </div>
+        {{#allowdownload}}
+            <a class="btn btn-outline-primary" href="{{{downloadurl}}}">{{#str}}download, videoprogressmaterial_office{{/str}}</a>
+        {{/allowdownload}}
+    </header>
+
+    {{#hasfile}}
+        {{#haspreview}}
+            <iframe src="{{{viewerurl}}}" class="w-100 border rounded" height="800"
+                    title="{{{name}}}" loading="lazy"></iframe>
+        {{/haspreview}}
+        {{^haspreview}}
+            <div class="alert alert-warning">{{#str}}previewunavailable, videoprogressmaterial_office{{/str}}</div>
+        {{/haspreview}}
+    {{/hasfile}}
+    {{^hasfile}}
+        <div class="alert alert-info">{{#str}}nofile, videoprogressmaterial_office{{/str}}</div>
+    {{/hasfile}}
+</section>

@@ -1,0 +1,312 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * IOMAD report users
+ *
+ * @package   local_report_users
+ * @copyright 2021 Derick Turner
+ * @author    Derick Turner
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+require_once(dirname(__FILE__).'/../../config.php');
+require_once($CFG->libdir.'/adminlib.php');
+require_once($CFG->dirroot.'/user/filters/lib.php');
+require_once($CFG->dirroot.'/blocks/iomad_company_admin/lib.php');
+
+$firstname = optional_param('firstname', '', PARAM_CLEAN);
+$lastname = optional_param('lastname', '', PARAM_CLEAN);   // Md5 confirmation hash.
+$showsuspended = optional_param('showsuspended', 0, PARAM_INT);
+$email = optional_param('email', '', PARAM_CLEAN);
+$sort = optional_param('sort', 'lastname', PARAM_ALPHA);
+$dir = optional_param('dir', 'ASC', PARAM_ALPHA);
+$page = optional_param('page', 0, PARAM_INT);
+// How many per page.
+$perpage = optional_param('perpage', $CFG->iomad_max_list_users, PARAM_INT);
+// Id of user to tweak mnet ACL (requires $access).
+$acl = optional_param('acl', '0', PARAM_INT);
+$search  = optional_param('search', '', PARAM_CLEAN);// Search string.
+$departmentid = optional_param('deptid', 0, PARAM_INTEGER);
+$viewchildren = optional_param('viewchildren', true, PARAM_BOOL);
+
+$params = [
+    'firstname' => $firstname,
+    'lastname' => $lastname,
+    'email' => $email,
+    'sort' => $sort,
+    'dir' => $dir,
+    'page' => $page,
+    'perpage' => $perpage,
+    'search' => $search,
+    'deptid' => $departmentid,
+    'showsuspended' => $showsuspended,
+];
+
+require_login();
+
+$systemcontext = context_system::instance();
+
+// Set the companyid.
+$companyid = iomad::get_my_companyid($systemcontext);
+$companycontext = \core\context\company::instance($companyid);
+$company = new company($companyid);
+
+iomad::require_capability('local/report_users:view', $companycontext);
+
+// Are we showing any child companies?
+$canseechildren = false;
+if (iomad::has_capability('block/iomad_company_admin:canviewchildren', $companycontext)) {
+    $canseechildren = true;
+}
+if (!$canseechildren) {
+    $viewchildren = false;
+}
+
+// Correct the navbar.
+// Set the name for the page.
+$linktext = get_string('report_users_title', 'local_report_users');
+
+// Set the url.
+$linkurl = new moodle_url($CFG->wwwroot . '/local/report_users/index.php');
+
+// Print the page header.
+$PAGE->set_context($companycontext);
+$PAGE->set_url($linkurl);
+$PAGE->set_pagelayout('report');
+$PAGE->set_title($linktext);
+
+// Javascript for fancy select.
+// Parameter is name of proper select form element followed by 1=submit its form.
+$PAGE->requires->js_call_amd('block_iomad_company_admin/department_select',
+                             'init',
+                             ['deptid',
+                              1,
+                              optional_param('deptid', 0, PARAM_INT)]);
+
+// Set the page heading.
+$PAGE->set_heading($linktext);
+
+// Log this page view.
+block_iomad_company_admin\event\dashboard_page_viewed::create_from_url($PAGE->url->out())->trigger();
+
+// Get the renderer.
+$output = $PAGE->get_renderer('block_iomad_company_admin');
+
+echo $output->header();
+
+// Check the department is valid.
+if (!empty($departmentid)) {
+    if (!company::check_valid_department($companyid, $departmentid)) {
+        throw new moodle_exception('invaliddepartment', 'block_iomad_company_admin');
+    }
+    $deprecord = $DB->get_record('department', ['id' => $departmentid]);
+    $selectedcompanyid = $deprecord->company;
+} else {
+    $selectedcompanyid = $companyid;
+}
+
+// Get the associated department id.
+$company = new company($companyid);
+$parentlevel = company::get_company_parentnode($company->id);
+$companydepartment = $parentlevel->id;
+
+// Work out where the user sits in the company department tree.
+if (iomad::has_capability('block/iomad_company_admin:edit_all_departments', $companycontext)) {
+    $userlevels = [$parentlevel->id => $parentlevel->id];
+} else {
+    $userlevels = $company->get_userlevel($USER);
+}
+
+$userhierarchylevel = key($userlevels);
+if ($departmentid == 0 ) {
+    $departmentid = $userhierarchylevel;
+}
+
+// Get the company additional optional user parameter names.
+$fieldnames = [];
+$allfields = [];
+if ($category = $DB->get_record_sql("SELECT uic.id, uic.name
+                                     FROM {user_info_category} uic
+                                     JOIN {company} c ON (uic.id = c.profileid)
+                                     WHERE c.id = :companyid",
+                                    ['companyid' => $companyid])) {
+    // Get field names from company category.
+    if ($fields = $DB->get_records('user_info_field', ['categoryid' => $category->id])) {
+        foreach ($fields as $field) {
+            $allfields[$field->id] = $field;
+            $fieldnames[$field->id] = 'profile_field_'.$field->shortname;
+            require_once($CFG->dirroot.'/user/profile/field/'.$field->datatype.'/field.class.php');
+            $newfield = 'profile_field_'.$field->datatype;
+            ${'profile_field_'.$field->shortname} = optional_param('profile_field_'.$field->shortname, null, PARAM_ALPHANUMEXT);
+        }
+    }
+}
+if ($categories = $DB->get_records_sql("SELECT id
+                                        FROM {user_info_category}
+                                        WHERE id NOT IN (
+                                            SELECT profileid FROM {company})")) {
+    foreach ($categories as $category) {
+        if ($fields = $DB->get_records('user_info_field', ['categoryid' => $category->id])) {
+            foreach ($fields as $field) {
+                $allfields[$field->id] = $field;
+                $fieldnames[$field->id] = 'profile_field_'.$field->shortname;
+                require_once($CFG->dirroot . '/user/profile/field/' . $field->datatype . '/field.class.php');
+                $newfield = 'profile_field_'.$field->datatype;
+                ${'profile_field_' . $field->shortname} = optional_param('profile_field_' . $field->shortname,
+                                                                          null,
+                                                                          PARAM_ALPHANUMEXT);
+            }
+        }
+    }
+}
+
+// Deal with the user optional profile search.
+$urlparams = $params;
+$idlist = [];
+$foundfields = false;
+if (!empty($fieldnames)) {
+    $fieldids = [];
+    foreach ($fieldnames as $id => $fieldname) {
+        $paramarray = [];
+        if (!empty($allfields[$id]->datatype) && $allfields[$id]->datatype == "menu" ) {
+            $paramarray = explode("\n", $allfields[$id]->param1);
+            if (!empty($paramarray[${$fieldname}])) {
+                ${$fieldname} = $paramarray[${$fieldname}];
+            } else {
+                ${$fieldname} = '';
+            }
+        }
+        if (!empty(${$fieldname} && ${$fieldname} != -1) ) {
+            $idlist[0] = "We found no one";
+            $fieldsql = $DB->sql_like($DB->sql_compare_text('data'), ':fieldname') .
+                        " AND fieldid = :fieldid";
+            $fieldparams = ['fieldname' => '%' . ${$fieldname} . '%',
+                            'fieldid' => $id];
+            if ($idfields = $DB->get_records_select('user_info_data', $fieldsql, $fieldparams, '', 'userid')) {
+                $fieldids[] = $idfields;
+            }
+            if (!empty($paramarray)) {
+                $params[$fieldname] = array_search(${$fieldname}, $paramarray);
+                $urlparams[$fieldname] = array_search(${$fieldname}, $paramarray);
+            } else {
+                if (!is_array(${$fieldname})) {
+                    $params[$fieldname] = ${$fieldname};
+                    $urlparams[$fieldname] = ${$fieldname};
+                } else {
+                    $params[$fieldname] = ${$fieldname};
+                    $urlparams[$fieldname] = serialize(${$fieldname});
+                }
+            }
+        }
+    }
+    if (!empty($fieldids)) {
+        $foundfields = true;
+        $idlist = array_pop($fieldids);
+        if (!empty($fieldids)) {
+            foreach ($fieldids as $fieldid) {
+                $idlist = array_intersect_key($idlist, $fieldid);
+                if (empty($idlist)) {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+$baseurl = new moodle_url(basename(__FILE__), $urlparams);
+$returnurl = $baseurl;
+
+// Set up the filter form.
+$mform = new local_iomad\forms\user_search_form(null, ['companyid' => $selectedcompanyid]);
+$mform->set_data(['departmentid' => $departmentid]);
+$mform->set_data($params);
+$mform->get_data();
+
+// Display the tree selector thing.
+echo $output->display_tree_selector($company, $parentlevel, $baseurl, $params, $departmentid, $viewchildren);
+echo html_writer::start_tag('div', ['class' => 'iomadclear', 'style' => 'padding-top: 5px;']);
+
+// Display the user filter form.
+echo html_writer::start_tag('div', ['class' => 'iomadusersearchform']);
+$mform->display();
+echo html_writer::end_tag('div');
+echo html_writer::end_tag('div');
+echo html_writer::start_tag('div', ['class' => 'iomadclear']);
+
+$stredit   = get_string('edit');
+$strdelete = get_string('delete');
+$strdeletecheck = get_string('deletecheck');
+
+$returnurl = $CFG->wwwroot."/local/report_users/index.php";
+
+// Deal with the form searching.
+$searchinfo = iomad::get_user_sqlsearch($params, $idlist, $sort, $dir, $departmentid, true, true);
+
+// Set up the table.
+$table = new local_report_users\tables\users_table('user_report_logins');
+
+// Deal with where we are on the department tree.
+$currentdepartment = company::get_departmentbyid($departmentid);
+$showdepartments = company::get_subdepartments_list($currentdepartment);
+$showdepartments[$departmentid] = $departmentid;
+[$departmentinsql, $departmentparams] = $DB->get_in_or_equal(array_keys($showdepartments), SQL_PARAMS_NAMED, 'deptids');
+$departmentsql = " AND d.id $departmentinsql";
+
+// All companies?
+$companysql = "";
+$parentparams = [];
+if ($parentslist = $company->get_parent_companies_recursive()) {
+    [$parentsql, $parentparams] = $DB->get_in_or_equal(array_keys($parentslist), SQL_PARAMS_NAMED, 'parentids');
+    $companysql = " AND u.id NOT IN (
+                        SELECT userid FROM {company_users}
+                        WHERE managertype = 1
+                        AND companyid {$parentsql})";
+}
+
+// Set up the initial SQL for the form.
+$selectsql = "DISTINCT u.*,u.timecreated as created, cu.companyid";
+$fromsql = "{user} u JOIN {company_users} cu ON (u.id = cu.userid) JOIN {department} d ON (cu.departmentid = d.id)";
+$wheresql = $searchinfo->sqlsearch . " AND cu.companyid = :companyid $departmentsql $companysql";
+$sqlparams = ['companyid' => $selectedcompanyid] + $searchinfo->searchparams + $parentparams + $departmentparams;
+
+// Set up the headers for the form.
+$headers = [get_string('fullname'),
+            get_string('department', 'block_iomad_company_admin'),
+            get_string('email')];
+
+$columns = ['fullname',
+            'department',
+            'email'];
+
+// Do we have any additional reporting fields?
+$company->add_company_extrafields($headers, $columns, $selectsql, $fromsql, $sqlparams);
+
+// And finaly the rest of the form headers.
+$headers[] = get_string('created', 'block_iomad_company_admin');
+$headers[] = get_string('lastaccess');
+$columns[] = 'created';
+$columns[] = 'currentlogin';
+
+$table->set_sql($selectsql, $fromsql, $wheresql, $sqlparams);
+$countsql = "SELECT count(DISTINCT u.id) FROM $fromsql WHERE $wheresql";
+$table->set_count_sql($countsql, $sqlparams);
+$table->define_baseurl($linkurl);
+$table->define_columns($columns);
+$table->define_headers($headers);
+$table->out($CFG->iomad_max_list_users, true);
+
+echo $output->footer();

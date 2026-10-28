@@ -1,0 +1,253 @@
+.videoprogress-view,
+.videoprogress-report,
+.videoprogress-student-detail,
+.videoprogress-captions,
+.videoprogress-caption-editor,
+.videoprogress-diagnostics,
+.videoprogress-index {
+    color: $videoprogress-text;
+    margin: 0 auto;
+    max-width: 1440px;
+}
+
+.videoprogress-view {
+    max-width: 1100px;
+}
+
+.videoprogress-view__header,
+.videoprogress-report__header {
+    align-items: flex-start;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+
+    h2 {
+        font-size: clamp(1.8rem, 3vw, 2.65rem);
+        font-weight: 750;
+        letter-spacing: -.035em;
+        margin: .2rem 0 .35rem;
+    }
+
+    p {
+        color: $videoprogress-muted;
+        margin: 0;
+    }
+}
+
+.videoprogress-view__actions,
+.videoprogress-report__actions,
+.videoprogress-row-actions,
+.videoprogress-reset-confirmation__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.videoprogress-intro,
+.videoprogress-detail-section,
+.videoprogress-filters,
+.videoprogress-report-timeline,
+.videoprogress-progress,
+.videoprogress-timeline-section,
+.videoprogress-confirmation {
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: $videoprogress-radius;
+    box-shadow: $videoprogress-shadow;
+    margin-bottom: 1.25rem;
+    padding: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.videoprogress-objectives {
+    align-items: flex-start;
+    background: linear-gradient(135deg, #eef6ff, #f8fbff);
+    border: 1px solid #cfe2fb;
+    border-radius: $videoprogress-radius;
+    display: flex;
+    gap: 1rem;
+    margin: 1.25rem 0;
+    padding: 1.25rem;
+
+    h3 {
+        font-size: 1.1rem;
+        margin: 0 0 .35rem;
+    }
+
+    p {
+        color: $videoprogress-muted;
+        margin: 0 0 .5rem;
+    }
+
+    ul {
+        margin-bottom: 0;
+        padding-left: 1.15rem;
+    }
+}
+
+.videoprogress-objectives__icon {
+    align-items: center;
+    background: $videoprogress-primary;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    flex: 0 0 38px;
+    font-weight: 800;
+    height: 38px;
+    justify-content: center;
+}
+
+.videoprogress-progress__header,
+.videoprogress-progress__meta,
+.videoprogress-section-heading,
+.videoprogress-report__result-heading {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.videoprogress-progress__header h3,
+.videoprogress-section-heading h3,
+.videoprogress-report__result-heading h3 {
+    margin: 0;
+}
+
+.videoprogress-progress__header p,
+.videoprogress-section-heading p {
+    color: $videoprogress-muted;
+    margin: .25rem 0 0;
+}
+
+.videoprogress-progress__percent {
+    color: $videoprogress-primary;
+    font-size: 2rem;
+}
+
+.videoprogress-progress__bar {
+    height: 12px;
+    margin: 1rem 0 .75rem;
+}
+
+.videoprogress-progress__bar .progress-bar,
+.videoprogress-student-progress .progress-bar {
+    background: linear-gradient(90deg, $videoprogress-primary, #3da6ff);
+}
+
+.videoprogress-progress__meta {
+    color: $videoprogress-muted;
+    font-size: .875rem;
+}
+
+.videoprogress-status {
+    margin-top: 1rem;
+}
+
+.videoprogress-confirmation.is-locked {
+    background: #f8f9fb;
+    box-shadow: none;
+}
+
+.videoprogress-report__back {
+    color: $videoprogress-muted;
+    display: inline-block;
+    font-size: .875rem;
+    margin-bottom: .75rem;
+}
+
+.videoprogress-index__list,
+.videoprogress-course-videos__list {
+    display: grid;
+    gap: .75rem;
+}
+
+.videoprogress-index__list article {
+    align-items: center;
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: $videoprogress-radius;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.25rem;
+}
+
+.videoprogress-point-form-page {
+    color: $videoprogress-text;
+    margin: 0 auto;
+    max-width: 1440px;
+}
+
+.videoprogress-point-form-page__layout {
+    align-items: start;
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    grid-template-columns: minmax(0, 1fr) minmax(360px, .85fr);
+    margin-top: 1.5rem;
+}
+
+.videoprogress-point-timepicker {
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: $videoprogress-radius;
+    box-shadow: $videoprogress-shadow;
+    padding: 1rem;
+    position: sticky;
+    top: 1rem;
+
+    .videoprogress-player-card {
+        border: 0;
+        box-shadow: none;
+        margin: 0 0 1rem;
+        padding: 0;
+    }
+}
+
+.videoprogress-point-timepicker__header {
+    margin-bottom: 1rem;
+
+    h3 {
+        font-size: 1.1rem;
+        margin: 0 0 .35rem;
+    }
+
+    p {
+        color: $videoprogress-muted;
+        font-size: .875rem;
+        margin: 0;
+    }
+}
+
+.videoprogress-point-timepicker__controls {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.videoprogress-point-timepicker__time {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    > span {
+        color: $videoprogress-muted;
+        font-size: .75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    strong {
+        font-size: 1.15rem;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .videoprogress-point-form-page__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .videoprogress-point-timepicker {
+        position: static;
+    }
+}

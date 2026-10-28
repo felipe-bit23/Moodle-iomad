@@ -1,0 +1,236 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/report
+
+    Example context (json):
+    {
+        "datatableconfig": "{}",
+        "viewurl": "/mod/videoprogress/view.php?id=10",
+        "activityname": "Vídeo de exemplo",
+        "coursename": "Curso de exemplo",
+        "canexport": true,
+        "exporturl": "/mod/videoprogress/report/export.php?id=10",
+        "canreset": true,
+        "massreseturl": "/mod/videoprogress/report/reset.php?id=10&mass=1",
+        "coursevideos": [
+            {
+                "url": "/mod/videoprogress/report/report.php?id=10",
+                "active": true,
+                "name": "Vídeo de exemplo",
+                "stats": "12 alunos · média 72%",
+                "timeline": [
+                    {
+                        "level": 1
+                    },
+                    {
+                        "level": 3
+                    },
+                    {
+                        "level": 2
+                    }
+                ]
+            }
+        ],
+        "summary": {
+            "enrolled": 12,
+            "started": 10,
+            "neverstarted": 2,
+            "inprogress": 4,
+            "completed": 6,
+            "averagepercent": 72,
+            "averageunique": "07:12",
+            "averagetotal": "09:40",
+            "totalwatchtime": "01:56:00",
+            "completionrate": 50
+        },
+        "hasaggregateddata": true,
+        "aggregatetimeline": [
+            {
+                "level": 2,
+                "tooltip": "00:00–00:10"
+            },
+            {
+                "level": 4,
+                "tooltip": "00:10–00:20"
+            }
+        ],
+        "insights": {
+            "mostwatched": {
+                "range": "00:10–00:20",
+                "views": 18
+            },
+            "leastwatched": {
+                "range": "09:40–09:50",
+                "views": 3
+            },
+            "dropoff": {
+                "range": "06:20–06:30",
+                "views": 5
+            }
+        },
+        "filters": {
+            "action": "/mod/videoprogress/report/report.php",
+            "cmid": 10,
+            "search": "",
+            "groups": [
+                {
+                    "value": "0",
+                    "selected": true,
+                    "label": "Todos os grupos"
+                }
+            ],
+            "statuses": [
+                {
+                    "value": "",
+                    "selected": true,
+                    "label": "Todos os status"
+                }
+            ],
+            "percentranges": [
+                {
+                    "value": "",
+                    "selected": true,
+                    "label": "Todos os percentuais"
+                }
+            ],
+            "lastviews": [
+                {
+                    "value": "",
+                    "selected": true,
+                    "label": "Qualquer acesso"
+                }
+            ],
+            "sorts": [
+                {
+                    "value": "fullname",
+                    "selected": true,
+                    "label": "Nome"
+                }
+            ],
+            "directions": [
+                {
+                    "value": "ASC",
+                    "selected": true,
+                    "label": "Crescente"
+                }
+            ],
+            "perpages": [
+                {
+                    "value": "20",
+                    "selected": true,
+                    "label": "20"
+                }
+            ]
+        },
+        "totalresults": 12,
+        "hasstudents": true,
+        "students": [
+            {
+                "avatarurl": "https://example.test/user/pix.php/2/f1.jpg",
+                "fullname": "Aluno Exemplo",
+                "email": "aluno@example.test",
+                "percent": 72.4,
+                "percentrounded": 72,
+                "uniquewatched": "07:12",
+                "totalwatchtime": "09:40",
+                "lastposition": "08:05",
+                "lastview": "12/08/2026 00:05",
+                "statusclass": "info",
+                "status": "Em andamento",
+                "timeline": [
+                    {
+                        "level": 1,
+                        "tooltip": "00:00–00:10"
+                    },
+                    {
+                        "level": 3,
+                        "tooltip": "00:10–00:20"
+                    }
+                ],
+                "timelinealternative": "O aluno assistiu principalmente o início do vídeo.",
+                "detailsurl": "/mod/videoprogress/report/user.php?id=10&userid=2",
+                "canreset": true,
+                "reseturl": "/mod/videoprogress/report/reset.php?id=10&userid=2"
+            }
+        ],
+        "pagination": {
+            "hasprevious": false,
+            "previousurl": "/mod/videoprogress/report/report.php?id=10&page=0",
+            "pages": [
+                {
+                    "url": "/mod/videoprogress/report/report.php?id=10&page=0",
+                    "active": true,
+                    "number": 1
+                }
+            ],
+            "hasnext": false,
+            "nexturl": "/mod/videoprogress/report/report.php?id=10&page=1"
+        }
+    }
+}}
+
+<div class="videoprogress-report" data-region="report" data-datatable-config="{{datatableconfig}}">
+    <header class="videoprogress-report__header">
+        <div>
+            <a href="{{{backurl}}}" class="btn btn-secondary btn-sm mb-3 videoprogress-report__back">
+                {{#str}} backtovideo, videoprogress {{/str}}
+            </a>
+            <h2>{{{activityname}}}</h2>
+            <p>{{{coursename}}}</p>
+        </div>
+        <div class="videoprogress-report__actions">
+            {{#canexport}}
+                <a href="{{{exporturl}}}"
+                   class="btn btn-outline-primary">{{#str}}exportcsv, videoprogress {{/str}}</a>
+            {{/canexport}}
+            {{#canreset}}
+                <a href="{{{massreseturl}}}"
+                   class="btn btn-outline-danger">{{#str}}resetfiltered, videoprogress {{/str}}</a>
+            {{/canreset}}
+        </div>
+    </header>
+
+    <details class="videoprogress-course-videos">
+        <summary>{{#str}} coursevideos, videoprogress {{/str}}</summary>
+        <div class="videoprogress-course-videos__list">
+            {{#coursevideos}}
+                <a href="{{{url}}}" class="videoprogress-course-video {{#active}}is-active{{/active}}">
+                    <strong>{{{name}}}</strong>
+                    <span>{{{stats}}}</span>
+                    <div class="videoprogress-mini-map" aria-hidden="true">
+                        {{#timeline}}
+                            <i class="level-{{{level}}}"></i>
+                        {{/timeline}}
+                    </div>
+                </a>
+            {{/coursevideos}}
+        </div>
+    </details>
+
+    {{> mod_videoprogress/report_summary}}
+    {{> mod_videoprogress/report_timeline}}
+    {{> mod_videoprogress/report_filters}}
+
+    <div class="videoprogress-report__result-heading">
+        <h3>{{#str}} students, videoprogress {{/str}}</h3>
+        <span>{{#str}} resultcount, videoprogress, {{{totalresults}}} {{/str}}</span>
+    </div>
+    {{#hasstudents}}{{> mod_videoprogress/report_students}}{{/hasstudents}}
+    {{^hasstudents}}{{> mod_videoprogress/report_empty}}{{/hasstudents}}
+    {{> mod_videoprogress/report_pagination}}
+</div>

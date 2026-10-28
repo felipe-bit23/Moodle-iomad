@@ -1,0 +1,100 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/manage_objectives
+
+    Example context (json):
+    {
+        "activityname": "Composição visual",
+        "backurl": "/mod/videoprogress/view.php?id=10",
+        "hasplugins": true,
+        "addurls": [
+            {
+                "name": "Texto",
+                "url": "/mod/videoprogress/objective/edit.php?id=10&plugin=text"
+            }
+        ],
+        "hasitems": true,
+        "items": [
+            {
+                "summary": "Identificar elementos visuais",
+                "pluginname": "Texto",
+                "disabled": false,
+                "pluginavailable": true,
+                "editurl": "/edit",
+                "deleteurl": "/delete"
+            }
+        ]
+    }
+}}
+
+<div class="videoprogress-manage">
+    <a href="{{{backurl}}}" class="btn btn-secondary btn-sm mb-3 videoprogress-report__back">
+        {{#str}} backtovideo, videoprogress {{/str}}
+    </a>
+    <div class="videoprogress-manage__heading">
+        <div>
+            <h2>{{#str}} manageobjectives, videoprogress {{/str}}</h2>
+            <p>{{#str}} manageobjectiveshelp, videoprogress {{/str}}</p>
+        </div>
+        {{#hasplugins}}
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button"
+                        data-toggle="dropdown" data-bs-toggle="dropdown">
+                    {{#str}} addobjective, videoprogress {{/str}}
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    {{#addurls}}
+                        <a class="dropdown-item" href="{{{url}}}">{{{name}}}</a>
+                    {{/addurls}}
+                </div>
+            </div>
+        {{/hasplugins}}
+    </div>
+    {{#hasitems}}
+        <div class="videoprogress-manage-list">
+            {{#items}}
+                <article>
+                    <div>
+                        <h3>{{{summary}}}</h3>
+                        <span>{{{pluginname}}}</span>
+                        {{#disabled}}
+                            <span class="badge badge-secondary">{{#str}}disabled, videoprogress {{/str}}</span>
+                        {{/disabled}}
+                    </div>
+                    <div>
+                        {{#pluginavailable}}
+                            <a class="btn btn-sm btn-outline-primary"
+                               href="{{{editurl}}}">{{#str}}edit, videoprogress {{/str}}</a>
+                        {{/pluginavailable}}
+                        <a class="btn btn-sm btn-outline-danger"
+                           href="{{{deleteurl}}}">{{#str}}delete, videoprogress {{/str}}</a>
+                    </div>
+                </article>
+            {{/items}}
+        </div>
+    {{/hasitems}}
+    {{^hasitems}}
+        <div class="videoprogress-empty">
+            <h3>{{#str}} noobjectives, videoprogress {{/str}}</h3>
+            <p>{{#str}} noobjectiveshelp, videoprogress {{/str}}</p>
+        </div>
+    {{/hasitems}}
+    {{^hasplugins}}
+        <div class="alert alert-warning">{{#str}} noobjectiveplugins, videoprogress {{/str}}</div>
+    {{/hasplugins}}
+</div>

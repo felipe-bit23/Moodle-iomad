@@ -1,0 +1,45 @@
+.videoprogress-caption-list {
+    display: grid;
+    gap: .75rem;
+}
+
+.videoprogress-caption-list article {
+    align-items: center;
+    background: #f7f9fc;
+    border: 1px solid $videoprogress-border;
+    border-radius: 11px;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.videoprogress-caption-list__info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: .35rem;
+    min-width: 0;
+}
+
+.videoprogress-caption-list article span {
+    color: $videoprogress-muted;
+}
+
+.videoprogress-caption-list__url {
+    display: block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.videoprogress-inline-form {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+}
+
+.videoprogress-inline-form .form-control-sm {
+    max-width: 120px;
+}

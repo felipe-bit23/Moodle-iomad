@@ -1,0 +1,104 @@
+.iomadboostlink, .iomadboostlinkreports {
+  font-family: Ubuntu;
+  font-size: 12px;
+  font-weight: normal;
+  text-align: center;
+  line-height: 120%;
+}
+.iomadboostlink a, .iomadboostlinkreports a {
+  color: #337ab7;
+  padding: 0 10px;
+}
+.iomadboost_block_title {
+  color: #d30000;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: Ubuntu;
+  font-weight: normal;
+}
+
+#sitelogo {
+    float: left;
+    width:100px;
+    padding-bottom: 10px;
+}
+
+#siteheading {
+    float: left;
+    left: 100px;
+}
+
+#clientlogo {
+    float: right;
+    width: 100px;
+}
+#iomadboost_company_selector select {
+  display: inline;
+  width: auto;
+  margin-left: 10px;
+}
+.iomadboostlink_container {
+  background-color: #F7F7F7;
+  border: 1px solid #DDD;
+  margin-bottom: 15px;
+}
+@media (min-width: 992px) {
+  .iomadboostlink_container {
+    border-top-color: #F7F7F7;
+  }
+}
+.iomadboostlink_container > a {
+  display: block;
+  float: left;
+  margin: 10px;
+  min-height: 155px;
+}
+.iomadboostlink_container .iomadboostlink, .iomadboostlink_container .iomadboostlinkreports {
+  text-align: center;
+}
+.iomadboostlink_container .iomadboostlink .iomadboosticon, .iomadboostlink_container .iomadboostlink .iomadboosticonreports {
+  display: block;
+  position: relative;
+  margin: 10px 0;
+}
+.iomadboostlink_container .iomadboostlink .iomadboosticon .fa-topic, .iomadboostlink_container .iomadboostlinkreports .iomadboosticon .fa-topic {
+  font-size: 54px;
+  margin-bottom: 10px;
+  color: #666;
+}
+.iomadboostlink_container .iomadboostlink .iomadboosticon .fa-action, .iomadboostlink_container .iomadboostlinkreports .iomadboosticon .fa-action {
+  border-radius: 15px;
+  color: #FFFFFF;
+  background-color: #93d800;
+  font-size: 20px;
+  height: 30px;
+  line-height: 30px;
+  margin-left: -15px;
+  width: 30px;
+  position: absolute;
+  bottom: 0;
+}
+.iomadboostlink_container .iomadboostlink .linkname, .iomadboostlink_container .iomadboostlinkreports .linkname {
+  display: block;
+  width: 100%;
+}
+.block_iomadboost_reports .iomadboostlink_container {
+  border-top-color: #DDD;
+}
+div.iomadboostlink, div.iomadboostlinkreports {
+    min-height: 130px;
+    background-color: #ffec70;
+    background-color: #ddd;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #888888;
+}
+.progress {
+    background-color: #666;
+}
+.progress-bar {
+    background-color: green;
+}
+
+#page-blocks-iomadboost_company_admin-company_groups_create_form #region-main {
+    height: 100%;
+}

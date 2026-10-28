@@ -1,0 +1,155 @@
+.videoprogress-support-materials {
+    margin: 1.5rem 0;
+}
+
+.videoprogress-support-materials__grid {
+    display: grid;
+    gap: .85rem;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+}
+
+.videoprogress-material-card {
+    align-items: center;
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: 13px;
+    box-shadow: 0 6px 18px rgba(24, 49, 83, .06);
+    display: flex;
+    gap: .85rem;
+    min-height: 82px;
+    padding: .9rem;
+    position: relative;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+
+    &:hover,
+    &:focus-within {
+        border-color: #77b8b0;
+        box-shadow: 0 10px 24px rgba(24, 49, 83, .11);
+        transform: translateY(-1px);
+    }
+
+    > div {
+        display: grid;
+        gap: .15rem;
+    }
+
+    strong {
+        color: $videoprogress-text;
+        line-height: 1.25;
+    }
+
+    div span {
+        color: $videoprogress-muted;
+        font-size: .8rem;
+    }
+}
+
+.videoprogress-material-card__icon {
+    align-items: center;
+    background: #eaf8f6;
+    border-radius: 10px;
+    color: #147b71;
+    display: inline-flex;
+    flex: 0 0 48px;
+    font-size: .7rem;
+    font-weight: 800;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: .04em;
+}
+
+.videoprogress-material-card--pdf .videoprogress-material-card__icon {
+    background: #fff0ed;
+    color: #c64b3c;
+}
+
+.videoprogress-material-page,
+.videoprogress-form-page,
+.videoprogress-manage {
+    color: $videoprogress-text;
+    margin: 0 auto;
+    max-width: 1160px;
+}
+
+.videoprogress-material-view {
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: $videoprogress-radius;
+    box-shadow: $videoprogress-shadow;
+    padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.videoprogress-material-view--pdf header {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.videoprogress-material-view--pdf iframe {
+    border: 1px solid $videoprogress-border;
+    border-radius: 10px;
+    height: min(78vh, 900px);
+    width: 100%;
+}
+
+.videoprogress-manage__heading,
+.videoprogress-manage-list article,
+.videoprogress-point-editor > header {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.videoprogress-manage__cards {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    margin-top: 1.5rem;
+
+    a {
+        background: #fff;
+        border: 1px solid $videoprogress-border;
+        border-radius: $videoprogress-radius;
+        box-shadow: $videoprogress-shadow;
+        color: $videoprogress-text;
+        display: grid;
+        gap: .4rem;
+        padding: 1.5rem;
+        text-decoration: none;
+    }
+}
+
+.videoprogress-manage-list,
+.videoprogress-point-list {
+    display: grid;
+    gap: .8rem;
+    margin: 1.5rem 0;
+}
+
+.videoprogress-manage-list article,
+.videoprogress-point-editor,
+.videoprogress-empty,
+.videoprogress-form-page__form {
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: 13px;
+    padding: 1rem 1.15rem;
+}
+
+.videoprogress-manage-list article > div:first-child {
+    display: grid;
+}
+
+.videoprogress-manage-list article > div:last-child,
+.videoprogress-point-editor > header > div:last-child,
+.videoprogress-point-editor__items > div span:last-child {
+    display: flex;
+    gap: .5rem;
+}
+
+.videoprogress-form-page__form {
+    margin-top: 1rem;
+}

@@ -1,0 +1,53 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/report_summary
+
+    Example context (json):
+    {
+        "summary": {
+            "enrolled": 12,
+            "started": 10,
+            "neverstarted": 2,
+            "inprogress": 4,
+            "completed": 6,
+            "averagepercent": 72,
+            "averageunique": "07:12",
+            "averagetotal": "09:40",
+            "totalwatchtime": "01:56:00",
+            "completionrate": 50
+        }
+    }
+}}
+
+<section class="videoprogress-summary" aria-labelledby="videoprogress-summary-heading">
+    <h3 id="videoprogress-summary-heading" class="sr-only">{{#str}} analyticssummary, videoprogress {{/str}}</h3>
+    <div class="videoprogress-summary__grid">
+        <article class="videoprogress-stat-card"><h3>{{{summary.enrolled}}}</h3><span>{{#str}}enrolledstudents, videoprogress {{/str}}</span></article>
+        <article class="videoprogress-stat-card"><h3>{{{summary.started}}}</h3><span>{{#str}}startedstudents, videoprogress {{/str}}</span></article>
+        <article class="videoprogress-stat-card"><h3>{{{summary.neverstarted}}}</h3><span>{{#str}}neverstartedstudents, videoprogress {{/str}}</span></article>
+        <article class="videoprogress-stat-card"><h3>{{{summary.inprogress}}}</h3><span>{{#str}}inprogressstudents, videoprogress {{/str}}</span></article>
+        <article class="videoprogress-stat-card is-accent"><h3>{{{summary.completed}}}</h3><span>{{#str}}completedstudents, videoprogress {{/str}}</span></article>
+    </div>
+    <div class="videoprogress-summary__grid">
+        <article class="videoprogress-stat-card"><h3>{{{summary.averagepercent}}}%</h3><span>{{#str}}averagewatched, videoprogress {{/str}}</span></article>
+        <article class="videoprogress-stat-card"><h3>{{{summary.averageunique}}}</h3><span>{{#str}}averageunique, videoprogress {{/str}}</span></article>
+        <article class="videoprogress-stat-card"><h3>{{{summary.averagetotal}}}</h3><span>{{#str}}averagetotal, videoprogress {{/str}}</span></article>
+        <article class="videoprogress-stat-card"><h3>{{{summary.totalwatchtime}}}</h3><span>{{#str}}classtotalwatchtime, videoprogress {{/str}}</span></article>
+        <article class="videoprogress-stat-card is-accent"><h3>{{{summary.completionrate}}}%</h3><span>{{#str}}completionrate, videoprogress {{/str}}</span></article>
+    </div>
+</section>

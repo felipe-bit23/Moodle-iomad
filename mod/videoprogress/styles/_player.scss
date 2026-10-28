@@ -1,0 +1,28 @@
+.videoprogress-player-card {
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: $videoprogress-radius;
+    box-shadow: $videoprogress-shadow;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    padding: .65rem;
+}
+
+.videoprogress-player {
+    aspect-ratio: var(--videoprogress-aspect-ratio, 16/9);
+    background: #07101d;
+    border-radius: 11px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.videoprogress-player__video,
+.videoprogress-player__embed,
+.videoprogress-player__embed iframe {
+    border: 0;
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+}

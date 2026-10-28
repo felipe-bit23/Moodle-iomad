@@ -1,0 +1,1140 @@
+@charset "UTF-8";
+.videoprogress-view,
+.videoprogress-report,
+.videoprogress-student-detail,
+.videoprogress-captions,
+.videoprogress-caption-editor,
+.videoprogress-diagnostics,
+.videoprogress-index {
+  color: #172235;
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+.videoprogress-view {
+  max-width: 1100px;
+}
+
+.videoprogress-view__header,
+.videoprogress-report__header {
+  align-items: flex-start;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.videoprogress-view__header h2,
+.videoprogress-report__header h2 {
+  font-size: clamp(1.8rem, 3vw, 2.65rem);
+  font-weight: 750;
+  letter-spacing: -0.035em;
+  margin: 0.2rem 0 0.35rem;
+}
+.videoprogress-view__header p,
+.videoprogress-report__header p {
+  color: #617086;
+  margin: 0;
+}
+
+.videoprogress-view__actions,
+.videoprogress-report__actions,
+.videoprogress-row-actions,
+.videoprogress-reset-confirmation__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.videoprogress-intro,
+.videoprogress-detail-section,
+.videoprogress-filters,
+.videoprogress-report-timeline,
+.videoprogress-progress,
+.videoprogress-timeline-section,
+.videoprogress-confirmation {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(24, 49, 83, 0.08);
+  margin-bottom: 1.25rem;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.videoprogress-objectives {
+  align-items: flex-start;
+  background: linear-gradient(135deg, #eef6ff, #f8fbff);
+  border: 1px solid #cfe2fb;
+  border-radius: 16px;
+  display: flex;
+  gap: 1rem;
+  margin: 1.25rem 0;
+  padding: 1.25rem;
+}
+.videoprogress-objectives h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+}
+.videoprogress-objectives p {
+  color: #617086;
+  margin: 0 0 0.5rem;
+}
+.videoprogress-objectives ul {
+  margin-bottom: 0;
+  padding-left: 1.15rem;
+}
+
+.videoprogress-objectives__icon {
+  align-items: center;
+  background: #1469d2;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  flex: 0 0 38px;
+  font-weight: 800;
+  height: 38px;
+  justify-content: center;
+}
+
+.videoprogress-progress__header,
+.videoprogress-progress__meta,
+.videoprogress-section-heading,
+.videoprogress-report__result-heading {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.videoprogress-progress__header h3,
+.videoprogress-section-heading h3,
+.videoprogress-report__result-heading h3 {
+  margin: 0;
+}
+
+.videoprogress-progress__header p,
+.videoprogress-section-heading p {
+  color: #617086;
+  margin: 0.25rem 0 0;
+}
+
+.videoprogress-progress__percent {
+  color: #1469d2;
+  font-size: 2rem;
+}
+
+.videoprogress-progress__bar {
+  height: 12px;
+  margin: 1rem 0 0.75rem;
+}
+
+.videoprogress-progress__bar .progress-bar,
+.videoprogress-student-progress .progress-bar {
+  background: linear-gradient(90deg, #1469d2, #3da6ff);
+}
+
+.videoprogress-progress__meta {
+  color: #617086;
+  font-size: 0.875rem;
+}
+
+.videoprogress-status {
+  margin-top: 1rem;
+}
+
+.videoprogress-confirmation.is-locked {
+  background: #f8f9fb;
+  box-shadow: none;
+}
+
+.videoprogress-report__back {
+  color: #617086;
+  display: inline-block;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.videoprogress-index__list,
+.videoprogress-course-videos__list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.videoprogress-index__list article {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.25rem;
+}
+
+.videoprogress-point-form-page {
+  color: #172235;
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+.videoprogress-point-form-page__layout {
+  align-items: start;
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.85fr);
+  margin-top: 1.5rem;
+}
+
+.videoprogress-point-timepicker {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(24, 49, 83, 0.08);
+  padding: 1rem;
+  position: sticky;
+  top: 1rem;
+}
+.videoprogress-point-timepicker .videoprogress-player-card {
+  border: 0;
+  box-shadow: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.videoprogress-point-timepicker__header {
+  margin-bottom: 1rem;
+}
+.videoprogress-point-timepicker__header h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+}
+.videoprogress-point-timepicker__header p {
+  color: #617086;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.videoprogress-point-timepicker__controls {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.videoprogress-point-timepicker__time {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.videoprogress-point-timepicker__time > span {
+  color: #617086;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.videoprogress-point-timepicker__time strong {
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 991.98px) {
+  .videoprogress-point-form-page__layout {
+    grid-template-columns: 1fr;
+  }
+  .videoprogress-point-timepicker {
+    position: static;
+  }
+}
+.videoprogress-player-card {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(24, 49, 83, 0.08);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  padding: 0.65rem;
+}
+
+.videoprogress-player {
+  aspect-ratio: var(--videoprogress-aspect-ratio, 16/9);
+  background: #07101d;
+  border-radius: 11px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.videoprogress-player__video,
+.videoprogress-player__embed,
+.videoprogress-player__embed iframe {
+  border: 0;
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.videoprogress-support-materials {
+  margin: 1.5rem 0;
+}
+
+.videoprogress-support-materials__grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+}
+
+.videoprogress-material-card {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 13px;
+  box-shadow: 0 6px 18px rgba(24, 49, 83, 0.06);
+  display: flex;
+  gap: 0.85rem;
+  min-height: 82px;
+  padding: 0.9rem;
+  position: relative;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.videoprogress-material-card:hover, .videoprogress-material-card:focus-within {
+  border-color: #77b8b0;
+  box-shadow: 0 10px 24px rgba(24, 49, 83, 0.11);
+  transform: translateY(-1px);
+}
+.videoprogress-material-card > div {
+  display: grid;
+  gap: 0.15rem;
+}
+.videoprogress-material-card strong {
+  color: #172235;
+  line-height: 1.25;
+}
+.videoprogress-material-card div span {
+  color: #617086;
+  font-size: 0.8rem;
+}
+
+.videoprogress-material-card__icon {
+  align-items: center;
+  background: #eaf8f6;
+  border-radius: 10px;
+  color: #147b71;
+  display: inline-flex;
+  flex: 0 0 48px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: 0.04em;
+}
+
+.videoprogress-material-card--pdf .videoprogress-material-card__icon {
+  background: #fff0ed;
+  color: #c64b3c;
+}
+
+.videoprogress-material-page,
+.videoprogress-form-page,
+.videoprogress-manage {
+  color: #172235;
+  margin: 0 auto;
+  max-width: 1160px;
+}
+
+.videoprogress-material-view {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(24, 49, 83, 0.08);
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.videoprogress-material-view--pdf header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.videoprogress-material-view--pdf iframe {
+  border: 1px solid #dce4ee;
+  border-radius: 10px;
+  height: min(78vh, 900px);
+  width: 100%;
+}
+
+.videoprogress-manage__heading,
+.videoprogress-manage-list article,
+.videoprogress-point-editor > header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.videoprogress-manage__cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 1.5rem;
+}
+.videoprogress-manage__cards a {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(24, 49, 83, 0.08);
+  color: #172235;
+  display: grid;
+  gap: 0.4rem;
+  padding: 1.5rem;
+  text-decoration: none;
+}
+
+.videoprogress-manage-list,
+.videoprogress-point-list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1.5rem 0;
+}
+
+.videoprogress-manage-list article,
+.videoprogress-point-editor,
+.videoprogress-empty,
+.videoprogress-form-page__form {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 13px;
+  padding: 1rem 1.15rem;
+}
+
+.videoprogress-manage-list article > div:first-child {
+  display: grid;
+}
+
+.videoprogress-manage-list article > div:last-child,
+.videoprogress-point-editor > header > div:last-child,
+.videoprogress-point-editor__items > div span:last-child {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.videoprogress-form-page__form {
+  margin-top: 1rem;
+}
+
+.videoprogress-view {
+  max-width: 1440px;
+}
+
+.videoprogress-learning-layout {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 350px);
+}
+.videoprogress-learning-layout.without-content {
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0 auto;
+  max-width: 1100px;
+}
+
+.videoprogress-video-content {
+  background: linear-gradient(145deg, #f0fbfa, #e5f5f3);
+  border: 1px solid #cbe9e5;
+  border-radius: 16px;
+  overflow: hidden;
+  position: sticky;
+  top: 4rem;
+}
+
+.videoprogress-video-content__header {
+  padding: 1.15rem 1.15rem 0.7rem;
+}
+.videoprogress-video-content__header h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0.2rem 0 0;
+  text-transform: uppercase;
+}
+
+.videoprogress-video-content__list {
+  display: grid;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0.65rem 0.8rem;
+}
+
+.videoprogress-video-content__point {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 9px;
+  color: #172235;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 42px minmax(0, 1fr) 16px;
+  padding: 0.7rem 0.65rem;
+  text-align: left;
+  width: 100%;
+}
+.videoprogress-video-content__point:hover, .videoprogress-video-content__point:focus-visible {
+  background: rgba(255, 255, 255, 0.72);
+}
+.videoprogress-video-content__point.is-current {
+  background: #172b4d;
+  color: #fff;
+}
+
+.videoprogress-video-content__status {
+  color: #198b80;
+  font-size: 0.72rem;
+  font-weight: 750;
+  text-align: center;
+}
+
+.videoprogress-video-content__point.is-current .videoprogress-video-content__status {
+  color: #72ded3;
+}
+
+.videoprogress-video-content__text {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.videoprogress-video-content__text strong {
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+.videoprogress-video-content__text small {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  opacity: 0.76;
+}
+.videoprogress-video-content__text small span + span::before {
+  content: "•";
+  margin-right: 0.25rem;
+}
+
+.videoprogress-video-content__play {
+  color: #f47a51;
+  opacity: 0;
+}
+
+.videoprogress-video-content__point.is-current .videoprogress-video-content__play {
+  opacity: 1;
+}
+
+.videoprogress-content-overlay {
+  align-items: center;
+  background: rgba(4, 14, 28, 0.72);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: clamp(0.7rem, 3vw, 2rem);
+  position: absolute;
+  z-index: 20;
+}
+.videoprogress-content-overlay[hidden] {
+  display: none;
+}
+
+.videoprogress-content-overlay__panel {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+  color: #172235;
+  max-height: 94%;
+  max-width: 620px;
+  overflow: auto;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  width: 100%;
+}
+
+.videoprogress-content-overlay--note {
+  align-items: flex-end;
+  background: linear-gradient(0deg, rgba(4, 14, 28, 0.65), transparent 70%);
+  justify-content: flex-end;
+}
+.videoprogress-content-overlay--note .videoprogress-content-overlay__panel {
+  border-left: 5px solid #22aa9d;
+  max-width: 450px;
+}
+
+.videoprogress-content-overlay__body {
+  margin: 0.75rem 0;
+}
+
+.videoprogress-content-overlay__feedback {
+  border-radius: 8px;
+  margin: 0.75rem 0;
+  min-height: 1px;
+}
+.videoprogress-content-overlay__feedback.is-correct, .videoprogress-content-overlay__feedback.is-incorrect {
+  padding: 0.65rem 0.8rem;
+}
+.videoprogress-content-overlay__feedback.is-correct {
+  background: #e7f7ef;
+  color: #12663f;
+}
+.videoprogress-content-overlay__feedback.is-incorrect {
+  background: #fff1ef;
+  color: #9d2f25;
+}
+
+.videoprogress-quiz-answers {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.videoprogress-quiz-answer {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 10px;
+  color: #172235;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  text-align: left;
+}
+.videoprogress-quiz-answer:hover, .videoprogress-quiz-answer:focus-visible {
+  background: #edf5ff;
+  border-color: #6aa9eb;
+}
+.videoprogress-quiz-answer span {
+  align-items: center;
+  background: #edf1f6;
+  border-radius: 50%;
+  display: inline-flex;
+  flex: 0 0 28px;
+  height: 28px;
+  justify-content: center;
+}
+
+.videoprogress-point-editor > header > div:first-child {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.videoprogress-point-editor time {
+  background: #e9f7f5;
+  border-radius: 7px;
+  color: #147b71;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  padding: 0.35rem 0.5rem;
+}
+
+.videoprogress-point-editor__items {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.8rem 0;
+}
+.videoprogress-point-editor__items > div {
+  align-items: center;
+  background: #f7f9fc;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.55rem 0.7rem;
+}
+
+.videoprogress-timeline {
+  background: #eef1f5;
+  border: 1px solid #dce4ee;
+  border-radius: 9px;
+  display: flex;
+  height: 38px;
+  margin-top: 1rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+.videoprogress-timeline__bucket {
+  background: #edf0f4;
+  border-right: 1px solid rgba(255, 255, 255, 0.22);
+  flex: 1 1 0;
+  min-width: 1px;
+  outline-offset: -2px;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.videoprogress-timeline__bucket:focus, .videoprogress-timeline__bucket:hover {
+  filter: brightness(0.86);
+  position: relative;
+  transform: scaleY(1.12);
+  z-index: 2;
+}
+.videoprogress-timeline__bucket.level-1 {
+  background: #b7dcff;
+}
+.videoprogress-timeline__bucket.level-2 {
+  background: #7fbeff;
+}
+.videoprogress-timeline__bucket.level-3 {
+  background: #3d99f0;
+}
+.videoprogress-timeline__bucket.level-4 {
+  background: #176fc5;
+}
+.videoprogress-timeline__bucket.level-5 {
+  background: #0a4690;
+}
+
+.videoprogress-timeline__legend {
+  align-items: center;
+  color: #617086;
+  display: flex;
+  font-size: 0.75rem;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  margin-top: 0.65rem;
+}
+
+.videoprogress-timeline__legend-scale {
+  background: linear-gradient(90deg, #edf0f4, #0a4690);
+  border-radius: 10px;
+  height: 7px;
+  width: 90px;
+}
+
+.videoprogress-mini-map {
+  border-radius: 5px;
+  display: flex;
+  height: 16px;
+  min-width: 150px;
+  overflow: hidden;
+}
+.videoprogress-mini-map i {
+  background: #edf0f4;
+  flex: 1;
+  min-width: 1px;
+}
+.videoprogress-mini-map .level-1 {
+  background: #b7dcff;
+}
+.videoprogress-mini-map .level-2 {
+  background: #7fbeff;
+}
+.videoprogress-mini-map .level-3 {
+  background: #3d99f0;
+}
+.videoprogress-mini-map .level-4 {
+  background: #176fc5;
+}
+.videoprogress-mini-map .level-5 {
+  background: #0a4690;
+}
+
+.videoprogress-course-videos {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 16px;
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+}
+.videoprogress-course-videos summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.videoprogress-course-videos__list {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 1rem;
+}
+
+.videoprogress-course-video {
+  border: 1px solid #dce4ee;
+  border-radius: 12px;
+  color: #172235;
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+}
+.videoprogress-course-video span {
+  color: #617086;
+  font-size: 0.8rem;
+}
+.videoprogress-course-video.is-active {
+  background: #edf5ff;
+  border-color: #8bbcf2;
+}
+
+.videoprogress-summary__grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  margin-bottom: 1.25rem;
+}
+
+.videoprogress-stat-card {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(24, 49, 83, 0.05);
+  min-height: 116px;
+  padding: 1.1rem;
+}
+.videoprogress-stat-card strong {
+  display: block;
+  font-size: 1.65rem;
+  line-height: 1.15;
+  margin-bottom: 0.45rem;
+}
+.videoprogress-stat-card span {
+  color: #617086;
+  font-size: 0.82rem;
+}
+.videoprogress-stat-card.is-accent {
+  background: #1469d2;
+  border-color: #1469d2;
+  color: #fff;
+}
+.videoprogress-stat-card.is-accent span {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.videoprogress-insights,
+.videoprogress-detail-metrics {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-top: 1rem;
+}
+
+.videoprogress-insights article,
+.videoprogress-detail-metrics article {
+  background: #f7f9fc;
+  border: 1px solid #dce4ee;
+  border-radius: 11px;
+  display: grid;
+  gap: 0.2rem;
+  padding: 1rem;
+}
+.videoprogress-insights article span,
+.videoprogress-insights article small,
+.videoprogress-detail-metrics article span,
+.videoprogress-detail-metrics article small {
+  color: #617086;
+}
+.videoprogress-insights article strong,
+.videoprogress-detail-metrics article strong {
+  font-size: 1.15rem;
+}
+
+.videoprogress-detail-metrics {
+  margin-bottom: 1.25rem;
+}
+
+.videoprogress-filters__form {
+  align-items: end;
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: minmax(220px, 2fr) repeat(7, minmax(120px, 1fr)) auto;
+}
+
+.videoprogress-filters__form .form-group {
+  margin: 0;
+}
+
+.videoprogress-filters__form label {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.videoprogress-report__result-heading {
+  margin: 1.5rem 0 0.8rem;
+}
+
+.videoprogress-report-list {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(24, 49, 83, 0.08);
+  overflow-x: auto;
+}
+
+.videoprogress-students-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+  width: 100%;
+}
+.videoprogress-students-table th {
+  background: #f6f8fb;
+  border-bottom: 1px solid #dce4ee;
+  color: #617086;
+  font-size: 0.72rem;
+  letter-spacing: 0.035em;
+  padding: 0.85rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.videoprogress-students-table td {
+  border-bottom: 1px solid #edf0f4;
+  padding: 0.85rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.videoprogress-students-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.videoprogress-student-identity {
+  align-items: center;
+  display: flex;
+  gap: 0.65rem;
+  min-width: 220px;
+}
+.videoprogress-student-identity img {
+  border-radius: 50%;
+}
+.videoprogress-student-identity span {
+  display: grid;
+}
+.videoprogress-student-identity small {
+  color: #617086;
+  font-size: 0.75rem;
+}
+
+.videoprogress-student-progress {
+  min-width: 120px;
+}
+.videoprogress-student-progress .progress {
+  height: 7px;
+  margin-top: 0.35rem;
+}
+
+.videoprogress-pagination {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.videoprogress-pagination__pages {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.videoprogress-empty,
+.videoprogress-muted-panel {
+  background: #f7f9fc;
+  border: 1px dashed #bac6d4;
+  border-radius: 16px;
+  color: #617086;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.videoprogress-sessions,
+.videoprogress-diagnostic-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.videoprogress-sessions article,
+.videoprogress-diagnostic-list article {
+  background: #f7f9fc;
+  border: 1px solid #dce4ee;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  padding: 1rem;
+}
+
+.videoprogress-reset-confirmation {
+  background: #fff;
+  border: 1px solid #f0c7c3;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(24, 49, 83, 0.08);
+  margin: 2rem auto;
+  max-width: 680px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.videoprogress-reset-confirmation__icon {
+  align-items: center;
+  background: #fff0ef;
+  border-radius: 50%;
+  color: #c0392b;
+  display: flex;
+  font-size: 1.5rem;
+  font-weight: 800;
+  height: 54px;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  width: 54px;
+}
+
+.videoprogress-reset-confirmation__actions {
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.videoprogress-caption-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.videoprogress-caption-list article {
+  align-items: center;
+  background: #f7f9fc;
+  border: 1px solid #dce4ee;
+  border-radius: 11px;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.videoprogress-caption-list__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.videoprogress-caption-list article span {
+  color: #617086;
+}
+
+.videoprogress-caption-list__url {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.videoprogress-inline-form {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.videoprogress-inline-form .form-control-sm {
+  max-width: 120px;
+}
+
+@media (max-width: 1200px) {
+  .videoprogress-learning-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 300px);
+  }
+  .videoprogress-filters__form {
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+  }
+  .videoprogress-filter-search {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 767.98px) {
+  .videoprogress-learning-layout {
+    grid-template-columns: 1fr;
+  }
+  .videoprogress-video-content {
+    position: static;
+  }
+  .videoprogress-manage__heading,
+  .videoprogress-manage-list article,
+  .videoprogress-point-editor > header,
+  .videoprogress-material-view--pdf header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .videoprogress-view__header,
+  .videoprogress-report__header,
+  .videoprogress-progress__header,
+  .videoprogress-progress__meta,
+  .videoprogress-section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .videoprogress-filters__form {
+    grid-template-columns: 1fr;
+  }
+  .videoprogress-filter-search {
+    grid-column: auto;
+  }
+  .videoprogress-report-list {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .videoprogress-students-table,
+  .videoprogress-students-table tbody,
+  .videoprogress-students-table tr,
+  .videoprogress-students-table td {
+    display: block;
+    width: 100%;
+  }
+  .videoprogress-students-table thead {
+    clip: rect(0 0 0 0);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+  }
+  .videoprogress-students-table tr {
+    background: #fff;
+    border: 1px solid #dce4ee;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(24, 49, 83, 0.08);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    padding: 0.55rem 1rem;
+  }
+  .videoprogress-students-table td {
+    align-items: center;
+    border-bottom: 1px solid #edf0f4;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    white-space: normal;
+  }
+  .videoprogress-students-table td::before {
+    color: #617086;
+    content: attr(data-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 1rem;
+  }
+  .videoprogress-students-table td:first-child {
+    display: block;
+  }
+  .videoprogress-students-table td:first-child::before {
+    display: none;
+  }
+  .videoprogress-students-table td:last-child {
+    border-bottom: 0;
+  }
+  .videoprogress-mini-map {
+    min-width: 45vw;
+  }
+  .videoprogress-row-actions {
+    justify-content: flex-end;
+  }
+  .videoprogress-pagination {
+    flex-wrap: wrap;
+  }
+  .videoprogress-caption-list article,
+  .videoprogress-index__list article {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .videoprogress-timeline__bucket {
+    transition: none;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

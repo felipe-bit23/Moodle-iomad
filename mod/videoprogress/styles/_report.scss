@@ -1,0 +1,261 @@
+.videoprogress-course-videos {
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: $videoprogress-radius;
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.25rem;
+
+    summary {
+        cursor: pointer;
+        font-weight: 700;
+    }
+}
+
+.videoprogress-course-videos__list {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    margin-top: 1rem;
+}
+
+.videoprogress-course-video {
+    border: 1px solid $videoprogress-border;
+    border-radius: 12px;
+    color: $videoprogress-text;
+    display: grid;
+    gap: .4rem;
+    padding: 1rem;
+
+    span {
+        color: $videoprogress-muted;
+        font-size: .8rem;
+    }
+
+    &.is-active {
+        background: $videoprogress-soft;
+        border-color: #8bbcf2;
+    }
+}
+
+.videoprogress-summary__grid {
+    display: grid;
+    gap: .85rem;
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    margin-bottom: 1.25rem;
+}
+
+.videoprogress-stat-card {
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(24, 49, 83, .05);
+    min-height: 116px;
+    padding: 1.1rem;
+
+    strong {
+        display: block;
+        font-size: 1.65rem;
+        line-height: 1.15;
+        margin-bottom: .45rem;
+    }
+
+    span {
+        color: $videoprogress-muted;
+        font-size: .82rem;
+    }
+
+    &.is-accent {
+        background: $videoprogress-primary;
+        border-color: $videoprogress-primary;
+        color: #fff;
+
+        span {
+            color: rgba(255, 255, 255, .8);
+        }
+    }
+}
+
+.videoprogress-insights,
+.videoprogress-detail-metrics {
+    display: grid;
+    gap: .75rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    margin-top: 1rem;
+}
+
+.videoprogress-insights article,
+.videoprogress-detail-metrics article {
+    background: #f7f9fc;
+    border: 1px solid $videoprogress-border;
+    border-radius: 11px;
+    display: grid;
+    gap: .2rem;
+    padding: 1rem;
+
+    span,
+    small {
+        color: $videoprogress-muted;
+    }
+
+    strong {
+        font-size: 1.15rem;
+    }
+}
+
+.videoprogress-detail-metrics {
+    margin-bottom: 1.25rem;
+}
+
+.videoprogress-filters__form {
+    align-items: end;
+    display: grid;
+    gap: .8rem;
+    grid-template-columns: minmax(220px, 2fr) repeat(7, minmax(120px, 1fr)) auto;
+}
+
+.videoprogress-filters__form .form-group {
+    margin: 0;
+}
+
+.videoprogress-filters__form label {
+    font-size: .78rem;
+    font-weight: 700;
+}
+
+.videoprogress-report__result-heading {
+    margin: 1.5rem 0 .8rem;
+}
+
+.videoprogress-report-list {
+    background: #fff;
+    border: 1px solid $videoprogress-border;
+    border-radius: $videoprogress-radius;
+    box-shadow: $videoprogress-shadow;
+    overflow-x: auto;
+}
+
+.videoprogress-students-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    width: 100%;
+
+    th {
+        background: #f6f8fb;
+        border-bottom: 1px solid $videoprogress-border;
+        color: $videoprogress-muted;
+        font-size: .72rem;
+        letter-spacing: .035em;
+        padding: .85rem;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    td {
+        border-bottom: 1px solid #edf0f4;
+        padding: .85rem;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: 0;
+    }
+}
+
+.videoprogress-student-identity {
+    align-items: center;
+    display: flex;
+    gap: .65rem;
+    min-width: 220px;
+
+    img {
+        border-radius: 50%;
+    }
+
+    span {
+        display: grid;
+    }
+
+    small {
+        color: $videoprogress-muted;
+        font-size: .75rem;
+    }
+}
+
+.videoprogress-student-progress {
+    min-width: 120px;
+
+    .progress {
+        height: 7px;
+        margin-top: .35rem;
+    }
+}
+
+.videoprogress-pagination {
+    align-items: center;
+    display: flex;
+    gap: .75rem;
+    justify-content: center;
+    margin-top: 1.25rem;
+}
+
+.videoprogress-pagination__pages {
+    display: flex;
+    gap: .35rem;
+}
+
+.videoprogress-empty,
+.videoprogress-muted-panel {
+    background: #f7f9fc;
+    border: 1px dashed #bac6d4;
+    border-radius: $videoprogress-radius;
+    color: $videoprogress-muted;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.videoprogress-sessions,
+.videoprogress-diagnostic-list {
+    display: grid;
+    gap: .75rem;
+}
+
+.videoprogress-sessions article,
+.videoprogress-diagnostic-list article {
+    background: #f7f9fc;
+    border: 1px solid $videoprogress-border;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem 1.5rem;
+    padding: 1rem;
+}
+
+.videoprogress-reset-confirmation {
+    background: #fff;
+    border: 1px solid #f0c7c3;
+    border-radius: $videoprogress-radius;
+    box-shadow: $videoprogress-shadow;
+    margin: 2rem auto;
+    max-width: 680px;
+    padding: 2rem;
+    text-align: center;
+}
+
+.videoprogress-reset-confirmation__icon {
+    align-items: center;
+    background: #fff0ef;
+    border-radius: 50%;
+    color: $videoprogress-danger;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 800;
+    height: 54px;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    width: 54px;
+}
+
+.videoprogress-reset-confirmation__actions {
+    justify-content: center;
+    margin-top: 1.5rem;
+}

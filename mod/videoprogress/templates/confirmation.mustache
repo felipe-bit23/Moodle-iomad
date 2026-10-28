@@ -1,0 +1,54 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_videoprogress/confirmation
+
+    Example context (json):
+    {
+        "confirmation": {
+            "required": true,
+            "available": true,
+            "confirmed": false,
+            "url": "/mod/videoprogress/view.php?id=10",
+            "sesskey": "examplesesskey"
+        }
+    }
+}}
+
+<section
+        class="videoprogress-confirmation {{^confirmation.available}}{{^confirmation.confirmed}}is-locked{{/confirmation.confirmed}}{{/confirmation.available}}"
+        aria-labelledby="videoprogress-confirmation-heading">
+    <h3 id="videoprogress-confirmation-heading">{{#str}} confirmationtitle, videoprogress {{/str}}</h3>
+    {{#confirmation.confirmed}}
+        <p class="text-success">{{#str}} confirmedmessage, videoprogress {{/str}}</p>
+    {{/confirmation.confirmed}}
+    {{^confirmation.confirmed}}
+        <p>
+            {{#confirmation.available}}
+                {{#str}}confirmationavailable, videoprogress {{/str}}
+            {{/confirmation.available}}
+            {{^confirmation.available}}
+                {{#str}}confirmationlocked, videoprogress {{/str}}
+            {{/confirmation.available}}</p>
+        <form method="post" action="{{{confirmation.url}}}">
+            <input type="hidden" name="sesskey" value="{{{confirmation.sesskey}}}">
+            <input type="hidden" name="confirm" value="1">
+            <button type="submit" class="btn btn-primary"
+                    {{^confirmation.available}}disabled{{/confirmation.available}}>{{#str}}confirmobjectives, videoprogress {{/str}}</button>
+        </form>
+    {{/confirmation.confirmed}}
+</section>
