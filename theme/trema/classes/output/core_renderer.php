@@ -58,6 +58,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $favicons[$companyid];
         }
 
+        $rev = function_exists('theme_get_revision') ? (int)theme_get_revision() : 1;
+        $ckey = "renderer_favicon_{$companyid}_{$rev}";
+        $muccache = function_exists('theme_trema_get_image_muc_cache') ? theme_trema_get_image_muc_cache() : null;
+        if ($muccache) {
+            $hit = $muccache->get($ckey);
+            if ($hit !== false && !empty($hit)) {
+                $favicons[$companyid] = new moodle_url($hit);
+                return $favicons[$companyid];
+            }
+        }
+
         // Use favicon configured in theme's settings (company-specific or global).
         $favicon = theme_trema_setting_file_url('favicon', 'favicon', $this->page->theme, $companyid);
 
@@ -86,6 +97,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $favicon = $parsedurl['scheme'] . '://' . $parsedurl['host'] . '/favicon.ico';
         }
 
+        if ($muccache && !empty($favicon)) {
+            $favstr = ($favicon instanceof moodle_url) ? $favicon->out(false) : (string)$favicon;
+            $muccache->set($ckey, $favstr);
+        }
         $favicons[$companyid] = $favicon;
         return $favicon;
     }
@@ -104,6 +119,29 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
         $companyid = theme_trema_get_active_companyid();
+        $rev = function_exists('theme_get_revision') ? (int)theme_get_revision() : 1;
+        $wkey = (int)($maxwidth ?? 0);
+        $hkey = (int)($maxheight ?? 200);
+        $ckey = "renderer_logo_{$companyid}_{$wkey}_{$hkey}_{$rev}";
+        $muccache = function_exists('theme_trema_get_image_muc_cache') ? theme_trema_get_image_muc_cache() : null;
+        if ($muccache) {
+            $hit = $muccache->get($ckey);
+            if ($hit !== false) {
+                return ($hit === '__none__') ? false : new moodle_url($hit);
+            }
+        }
+        $resolved = $this->resolve_tenant_logo_url($companyid, $maxwidth, $maxheight);
+        if ($muccache) {
+            $val = ($resolved instanceof moodle_url) ? $resolved->out(false) : ($resolved ? (string)$resolved : '__none__');
+            $muccache->set($ckey, $val);
+        }
+        return $resolved;
+    }
+
+    /**
+     * Internal resolver for full logo URL across Trema and IOMAD storage areas.
+     */
+    protected function resolve_tenant_logo_url(int $companyid, $maxwidth = null, $maxheight = 200) {
 
         if ($companyid > 0) {
             // 1. Check company-specific logo or compactlogo in Trema settings (verified in mdl_files).
@@ -185,6 +223,29 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function get_compact_logo_url($maxwidth = 300, $maxheight = 300) {
         $companyid = theme_trema_get_active_companyid();
+        $rev = function_exists('theme_get_revision') ? (int)theme_get_revision() : 1;
+        $wkey = (int)($maxwidth ?? 300);
+        $hkey = (int)($maxheight ?? 300);
+        $ckey = "renderer_compactlogo_{$companyid}_{$wkey}_{$hkey}_{$rev}";
+        $muccache = function_exists('theme_trema_get_image_muc_cache') ? theme_trema_get_image_muc_cache() : null;
+        if ($muccache) {
+            $hit = $muccache->get($ckey);
+            if ($hit !== false) {
+                return ($hit === '__none__') ? false : new moodle_url($hit);
+            }
+        }
+        $resolved = $this->resolve_tenant_compact_logo_url($companyid, $maxwidth, $maxheight);
+        if ($muccache) {
+            $val = ($resolved instanceof moodle_url) ? $resolved->out(false) : ($resolved ? (string)$resolved : '__none__');
+            $muccache->set($ckey, $val);
+        }
+        return $resolved;
+    }
+
+    /**
+     * Internal resolver for compact logo URL across Trema and IOMAD storage areas.
+     */
+    protected function resolve_tenant_compact_logo_url(int $companyid, $maxwidth = 300, $maxheight = 300) {
 
         if ($companyid > 0) {
             // 1. Check company-specific compact logo or full logo in Trema settings (verified in mdl_files).

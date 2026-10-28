@@ -219,3 +219,31 @@ body.path-mod-book .tertiary-navigation .navitem .btn.btn-secondary {
     background-color: $primary !important;
     color: choose-contrast-color($primary) !important;
 }
+
+
+// Resource Module: Full-viewport HTML & embedded object viewer.
+body.path-mod-resource {
+    #page-content,
+    .main-inner,
+    #region-main {
+        max-width: 100% !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .resourcecontent,
+    object#resourceobject,
+    iframe#resourceobject,
+    .resourcecontent iframe,
+    .resourcecontent object {
+        width: 100% !important;
+        height: 88vh !important;
+        min-height: calc(100vh - 150px) !important;
+        border: none !important;
+        border-radius: 12px;
+        display: block;
+        margin: 0 auto;
+    }
+}

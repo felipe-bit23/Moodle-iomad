@@ -28,12 +28,12 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2025092311;
+$plugin->version   = 2025092316;
 $plugin->requires  = 2023100900; // Moodle 4.3+.
 $plugin->supported = [403, 502];
 $plugin->component = 'theme_trema';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '4.5.1.11 (Build: 2025092311)';
+$plugin->release   = '4.6.0.2 (Build: 2025092316)';
 $plugin->dependencies = [
     'theme_boost' => 2023100900,
 ];

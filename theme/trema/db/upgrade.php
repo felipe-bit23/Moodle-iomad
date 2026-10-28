@@ -73,10 +73,10 @@ function xmldb_theme_trema_upgrade($oldversion): bool {
         upgrade_plugin_savepoint(true, 2025092303, 'theme', 'trema');
     }
 
-    if ($oldversion < 2025092311) {
+    if ($oldversion < 2025092315) {
         require_once($CFG->dirroot . '/theme/trema/locallib.php');
         theme_trema_auto_heal_config(true);
-        upgrade_plugin_savepoint(true, 2025092311, 'theme', 'trema');
+        upgrade_plugin_savepoint(true, 2025092315, 'theme', 'trema');
     }
 
     return true;

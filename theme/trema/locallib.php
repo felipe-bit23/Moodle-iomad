@@ -110,8 +110,7 @@ function theme_trema_get_company_record(int $companyid = 0): ?stdClass {
  * @param bool $force
  * @return void
  */
-function theme_trema_auto_heal_config(bool $force = false): void {
-    global $CFG;
+function theme_trema_auto_heal_config(bool $force = false, ?int $targetcompanyid = null): void {
     static $ran = false;
 
     if ($ran && !$force) {
@@ -130,8 +129,7 @@ function theme_trema_auto_heal_config(bool $force = false): void {
         // Canonical factory defaults for every non-file setting across all 9 tabs.
         // In Moodle's admin/settings.php, admin_settingpage::output_html() calls $setting->get_setting()
         // and does NOT fall back to get_defaultsetting() if a key is missing (NULL) in mdl_config_plugins.
-        // Therefore, every setting for Global (0) and every company (_cX) MUST always exist in mdl_config_plugins
-        // and must NEVER be deleted via unset_config().
+        // Therefore, every setting for Global (0) and every company (_cX) MUST always exist in mdl_config_plugins.
         $canonicaldefaults = [
             // Colors & Fonts
             'primarycolor' => '#1c6ca3',
@@ -211,30 +209,7 @@ function theme_trema_auto_heal_config(bool $force = false): void {
             // Footer
             'enabletremafooter' => '1',
             'footeropacity' => '1',
-            'defaultfooter' => '<div class="row">
-	<div class="col-md-8">
-		<h3 class="-align-center">Trema Solutions in Technology</h3>
-
-		<p>Our mission is to create solutions in technology that boost the teaching and learning experience.</p>
-	</div>
-	<div class="col-md-4">
-		<h3>Contact Us</h3>
-		<ul class="labeled-icons">
-			<li>
-                <span class="fa fa-globe fa-2x"></span>
-                <a href="https://trema.tech/" target="_blank" style="cursor: pointer;">
-                    <p>https://trema.tech/</p>
-                </a>
-            </li>
-			<li>
-                <span class="fa fa-github fa-2x"></span>
-                <a href="https://github.com/trema-tech/" target="_blank" style="cursor: pointer;">
-                    <p>https://github.com/trema-tech/</p>
-                </a>
-            </li>
-		</ul>
-	</div>
-</div>',
+            'defaultfooter' => '<div class="row">\n\t<div class="col-md-8">\n\t\t<h3 class="-align-center">Trema Solutions in Technology</h3>\n\n\t\t<p>Our mission is to create solutions in technology that boost the teaching and learning experience.</p>\n\t</div>\n\t<div class="col-md-4">\n\t\t<h3>Contact Us</h3>\n\t\t<ul class="labeled-icons">\n\t\t\t<li>\n                <span class="fa fa-globe fa-2x"></span>\n                <a href="https://trema.tech/" target="_blank" style="cursor: pointer;">\n                    <p>https://trema.tech/</p>\n                </a>\n            </li>\n\t\t\t<li>\n                <span class="fa fa-github fa-2x"></span>\n                <a href="https://github.com/trema-tech/" target="_blank" style="cursor: pointer;">\n                    <p>https://github.com/trema-tech/</p>\n                </a>\n            </li>\n\t\t</ul>\n\t</div>\n</div>',
             'enablefooterinfo' => '1',
             'showbranding' => '1',
             // Course & Courselist
@@ -254,59 +229,16 @@ function theme_trema_auto_heal_config(bool $force = false): void {
             'preset' => 'default.scss',
         ];
 
-        // Keys that should be enabled ('1') by default and healed if accidentally zeroed out before v11.
-        $defaultenabledcheckboxes = [
-            'frontpageenablecards', 'enabletremafooter', 'enablefooterinfo', 'showbranding',
-            'showactivityicons', 'enabletremalines', 'softness', 'showfrontpagelinkstopages',
-            'showumlogoutlink', 'loginshowloginform', 'cardcontacts', 'showehiddencategorycourses',
-            'enableadmindashboard', 'navfilter',
-        ];
-
-        $healedv11 = get_config('theme_trema', 'multitenant_v11_healed');
-        if (empty($healedv11) || $force) {
+        // One-time upgrade healing (v12): ONLY runs on upgrade or install, NEVER during normal requests.
+        $healedv12 = get_config('theme_trema', 'multitenant_v12_healed');
+        if (empty($healedv12)) {
             set_config('allowcompanythemes', 1);
             set_config('allowcoursethemes', 1);
             set_config('allowcategorythemes', 1);
             set_config('allowcohortthemes', 1);
             set_config('allowuserthemes', 1);
 
-            // Restore visibility checkboxes that were accidentally zeroed out by earlier NULL form saves.
-            foreach ($defaultenabledcheckboxes as $cbk) {
-                set_config($cbk, '1', 'theme_trema');
-                $raw->$cbk = '1';
-                foreach ($companies as $comp) {
-                    $cid = (int)$comp->id;
-                    $ck = "{$cbk}_c{$cid}";
-                    set_config($ck, '1', 'theme_trema');
-                    $raw->$ck = '1';
-                }
-            }
-
-            // Heal accidental 0 values on numberofimages, numberofcards, footeropacity, and Alegreya font.
-            foreach ($companies as $comp) {
-                $cid = (int)$comp->id;
-                $sfx = "_c{$cid}";
-                if (!isset($raw->{"numberofimages{$sfx}"}) || (int)$raw->{"numberofimages{$sfx}"} < 1) {
-                    set_config("numberofimages{$sfx}", '1', 'theme_trema');
-                    $raw->{"numberofimages{$sfx}"} = '1';
-                }
-                if (!isset($raw->{"numberofcards{$sfx}"}) || (int)$raw->{"numberofcards{$sfx}"} < 2) {
-                    set_config("numberofcards{$sfx}", '4', 'theme_trema');
-                    $raw->{"numberofcards{$sfx}"} = '4';
-                }
-                if (!isset($raw->{"footeropacity{$sfx}"}) || (string)$raw->{"footeropacity{$sfx}"} === '0' || trim((string)$raw->{"footeropacity{$sfx}"}) === '') {
-                    set_config("footeropacity{$sfx}", '1', 'theme_trema');
-                    $raw->{"footeropacity{$sfx}"} = '1';
-                }
-                foreach (['sitefont', 'bannertitlesfont', 'h1font', 'hxfont'] as $fontkey) {
-                    if (isset($raw->{"{$fontkey}{$sfx}"}) && $raw->{"{$fontkey}{$sfx}"} === 'Alegreya, serif') {
-                        set_config("{$fontkey}{$sfx}", 'Lato, sans-serif', 'theme_trema');
-                        $raw->{"{$fontkey}{$sfx}"} = 'Lato, sans-serif';
-                    }
-                }
-            }
-
-            // Verify physical files in Global fileareas and migrate company backgroundimage_cX to frontpagebanner_cX if needed.
+            // Clean up old physical file areas if needed.
             $fs = get_file_storage();
             $syscontext = \context_system::instance();
             foreach (['backgroundimage', 'frontpagebanner', 'logo', 'compactlogo', 'favicon', 'loginbackgroundimage'] as $farea) {
@@ -316,54 +248,12 @@ function theme_trema_auto_heal_config(bool $force = false): void {
                     unset($raw->$farea);
                 }
             }
-            foreach ($companies as $comp) {
-                $cid = (int)$comp->id;
-                $bgarea = "backgroundimage_c{$cid}";
-                $bannerarea = "frontpagebanner_c{$cid}";
-                $bgfiles = $fs->get_area_files($syscontext->id, 'theme_trema', $bgarea, 0, 'sortorder, filepath, filename', false);
-                $bfiles = $fs->get_area_files($syscontext->id, 'theme_trema', $bannerarea, 0, 'sortorder, filepath, filename', false);
-                if (!empty($bgfiles) && empty($bfiles)) {
-                    $bgfile = reset($bgfiles);
-                    $filerecord = [
-                        'contextid' => $syscontext->id,
-                        'component' => 'theme_trema',
-                        'filearea'  => $bannerarea,
-                        'itemid'    => 0,
-                        'filepath'  => $bgfile->get_filepath(),
-                        'filename'  => $bgfile->get_filename(),
-                    ];
-                    $fs->create_file_from_storedfile($filerecord, $bgfile);
-                    set_config($bannerarea, $bgfile->get_filepath() . $bgfile->get_filename(), 'theme_trema');
-                }
-            }
 
-            if (!empty($CFG->dirroot)) {
-                $formfile = $CFG->dirroot . '/blocks/iomad_company_admin/company_edit_form.php';
-                if (file_exists($formfile) && is_writable($formfile)) {
-                    $content = file_get_contents($formfile);
-                    if ($content !== false && strpos($content, "'trema'") === false && strpos($content, "'iomadboost'") !== false) {
-                        $patched = str_replace(
-                            "['iomad', 'iomadboost', 'iomadbootstrap']",
-                            "['iomad', 'iomadboost', 'iomadbootstrap', 'trema']",
-                            $content
-                        );
-                        $patched = str_replace(
-                            "array('iomad', 'iomadboost', 'iomadbootstrap')",
-                            "array('iomad', 'iomadboost', 'iomadbootstrap', 'trema')",
-                            $patched
-                        );
-                        if ($patched !== $content) {
-                            @file_put_contents($formfile, $patched);
-                        }
-                    }
-                }
-            }
-
-            set_config('multitenant_v11_healed', '1', 'theme_trema');
-            $raw->multitenant_v11_healed = '1';
+            set_config('multitenant_v12_healed', '1', 'theme_trema');
+            $raw->multitenant_v12_healed = '1';
         }
 
-        // Continuous Guard 1: Ensure every Global (0) canonical setting exists and is valid on every request.
+        // Continuous Guard 1: Ensure every Global (0) setting exists in mdl_config_plugins without overwriting existing '0's!
         foreach ($canonicaldefaults as $gkey => $gval) {
             if (!property_exists($raw, $gkey) || $raw->$gkey === null || $raw->$gkey === false || ($raw->$gkey === '' && $gval !== '')) {
                 set_config($gkey, $gval, 'theme_trema');
@@ -383,13 +273,7 @@ function theme_trema_auto_heal_config(bool $force = false): void {
             $raw->footeropacity = '1';
         }
 
-        // Continuous Guard 2: Propagate Global (0) changes to companies using set_config() (NEVER unset_config()!).
-        $internalkeys = [
-            'version', 'global_defaults_snapshot', 'multitenant_v7_healed',
-            'multitenant_v8_healed', 'multitenant_v11_healed',
-            'frontpagetitledefault', 'frontpagesubtitledefault',
-            'frontpagebuttontextdefault', 'cardtitledefault',
-        ];
+        // Continuous Guard 2: Propagate Global (0) changes to companies that were matching the old Global value.
         $snapjson = isset($raw->global_defaults_snapshot) ? $raw->global_defaults_snapshot : '';
         $snapshot = !empty($snapjson) ? @json_decode($snapjson, true) : [];
         if (!is_array($snapshot)) {
@@ -402,7 +286,7 @@ function theme_trema_auto_heal_config(bool $force = false): void {
             $gvstr = isset($raw->$gk) ? (string)$raw->$gk : (string)$defaultval;
             if (array_key_exists($gk, $snapshot) && (string)$snapshot[$gk] !== $gvstr) {
                 $oldgvstr = (string)$snapshot[$gk];
-                // Global setting changed! Update any company that was using the previous Global value via set_config.
+                // Global setting changed! Update any company that was using the previous Global value.
                 foreach ($companies as $comp) {
                     $cid = (int)$comp->id;
                     $ck = "{$gk}_c{$cid}";
@@ -422,9 +306,18 @@ function theme_trema_auto_heal_config(bool $force = false): void {
             set_config('global_defaults_snapshot', json_encode($newsnapshot), 'theme_trema');
         }
 
-        // Continuous Guard 3: Ensure every company (_cX) has every canonical setting populated in mdl_config_plugins
-        // so Moodle's admin/settings.php NEVER receives NULL from $setting->get_setting() and NEVER renders unchecked/blank inputs!
-        foreach ($companies as $comp) {
+        // Continuous Guard 3: Ensure target company (_cX) has every setting populated in mdl_config_plugins
+        // matching Global so $setting->get_setting() never returns NULL in admin/settings.php.
+        // Existing custom overrides (including explicit '0's) are strictly preserved!
+        $targetcompanies = $companies;
+        if (!$force && $targetcompanyid !== null) {
+            if ($targetcompanyid > 0 && isset($companies[$targetcompanyid])) {
+                $targetcompanies = [$targetcompanyid => $companies[$targetcompanyid]];
+            } else {
+                $targetcompanies = [];
+            }
+        }
+        foreach ($targetcompanies as $comp) {
             $cid = (int)$comp->id;
             $sfx = "_c{$cid}";
             foreach ($canonicaldefaults as $gk => $defaultval) {
@@ -480,8 +373,6 @@ function theme_trema_get_active_companyid(bool $refresh = false): int {
         $resolvedid = 0;
         return 0;
     }
-
-    theme_trema_auto_heal_config();
 
     // 1. Check by HTTP_HOST (subdomain / custom hostname configured in IOMAD company).
     $host = !empty($_SERVER['HTTP_HOST']) ? strtolower(trim(explode(':', $_SERVER['HTTP_HOST'])[0])) : '';
@@ -568,14 +459,14 @@ function theme_trema_get_editing_companyid(): int {
     global $SESSION;
 
     if (!theme_trema_has_iomad()) {
+        theme_trema_auto_heal_config(false, 0);
         return 0;
     }
-
-    theme_trema_auto_heal_config();
 
     // During Moodle upgrade / new settings screen, always use Global (0) so base settings are registered cleanly.
     $script = $_SERVER['SCRIPT_NAME'] ?? '';
     if (strpos($script, 'upgradesettings.php') !== false || strpos($script, 'upgrade.php') !== false) {
+        theme_trema_auto_heal_config(false, 0);
         return 0;
     }
 
@@ -584,17 +475,20 @@ function theme_trema_get_editing_companyid(): int {
     // 1. If a settings form is being submitted via POST, detect the exact company suffix (_cX or Global 0)
     // directly from the posted trema_companyid or s_theme_trema_* keys so saving NEVER mismatches the rendered form!
     if (!empty($_POST)) {
+        theme_trema_purge_image_muc_cache();
         if (isset($_POST['trema_companyid']) && is_numeric($_POST['trema_companyid'])) {
             $explicitcid = (int)$_POST['trema_companyid'];
             if ($explicitcid === 0) {
                 $SESSION->trema_editing_companyid = 0;
                 $SESSION->trema_last_iomad_company = $currentiomad;
+                theme_trema_auto_heal_config(false, 0);
                 return 0;
             }
             if ($explicitcid > 0 && theme_trema_get_company_record($explicitcid)) {
                 $SESSION->trema_editing_companyid = $explicitcid;
                 $SESSION->currenteditingcompany = $explicitcid;
                 $SESSION->trema_last_iomad_company = $explicitcid;
+                theme_trema_auto_heal_config(false, $explicitcid);
                 return $explicitcid;
             }
         }
@@ -608,6 +502,7 @@ function theme_trema_get_editing_companyid(): int {
                         $SESSION->trema_editing_companyid = $postcid;
                         $SESSION->currenteditingcompany = $postcid;
                         $SESSION->trema_last_iomad_company = $postcid;
+                        theme_trema_auto_heal_config(false, $postcid);
                         return $postcid;
                     }
                 } else {
@@ -618,6 +513,7 @@ function theme_trema_get_editing_companyid(): int {
         if ($hasglobalpost) {
             $SESSION->trema_editing_companyid = 0;
             $SESSION->trema_last_iomad_company = $currentiomad;
+            theme_trema_auto_heal_config(false, 0);
             return 0;
         }
     }
@@ -648,25 +544,50 @@ function theme_trema_get_editing_companyid(): int {
         }
 
         // Handle 1-click Reset of a company's overrides back to Global defaults.
+        // Accurately copies all current Global settings into this company AND removes company-specific uploaded files
+        // so the company inherits Global logos, banners, colors, texts, and checkboxes (including '0's) without touching Global!
         $resetcomp = optional_param('trema_reset_company', 0, PARAM_INT);
         if ($resetcomp === 1 && !empty($SESSION->trema_editing_companyid) && confirm_sesskey()) {
             $cid = (int)$SESSION->trema_editing_companyid;
             $sfx = "_c{$cid}";
             $sfxlen = strlen($sfx);
+
+            // 1. Delete company-specific uploaded files in Moodle File Storage so Global images take effect.
+            $fs = get_file_storage();
+            $syscontext = \context_system::instance();
+            $fileareas = [
+                'logo', 'compactlogo', 'favicon', 'frontpagebanner',
+                'backgroundimage', 'loginbackgroundimage', 'preset',
+                'frontpageimage1', 'frontpageimage2', 'frontpageimage3',
+                'frontpageimage4', 'frontpageimage5',
+            ];
+            foreach ($fileareas as $farea) {
+                $comparea = "{$farea}{$sfx}";
+                $fs->delete_area_files($syscontext->id, 'theme_trema', $comparea);
+                unset_config($comparea, 'theme_trema');
+            }
+
+            // 2. Copy all current Global settings into this company's _cX keys.
             $raw = get_config('theme_trema');
             if (is_object($raw)) {
                 foreach (get_object_vars($raw) as $k => $v) {
                     if (substr($k, -$sfxlen) === $sfx) {
                         $basek = substr($k, 0, -$sfxlen);
-                        if (isset($raw->$basek)) {
-                            set_config($k, $raw->$basek, 'theme_trema');
+                        if (in_array($basek, $fileareas, true)) {
+                            continue;
+                        }
+                        if (property_exists($raw, $basek) && $raw->$basek !== null && $raw->$basek !== false) {
+                            set_config($k, (string)$raw->$basek, 'theme_trema');
                         } else {
-                            unset_config($k, 'theme_trema');
+                            set_config($k, '', 'theme_trema');
                         }
                     }
                 }
             }
-            theme_trema_auto_heal_config(true);
+
+            // 3. Re-run targeted auto-heal to ensure all canonical keys exist for this company, then purge MUC & theme caches.
+            theme_trema_auto_heal_config(true, $cid);
+            theme_trema_purge_image_muc_cache();
             if (function_exists('theme_reset_all_caches')) {
                 theme_reset_all_caches();
             }
@@ -683,6 +604,8 @@ function theme_trema_get_editing_companyid(): int {
         $editingid = 0;
         $SESSION->trema_editing_companyid = 0;
     }
+
+    theme_trema_auto_heal_config(false, $editingid);
 
     return $editingid;
 }
@@ -1027,6 +950,56 @@ function theme_trema_get_cards_settings(?int $companyid = null) {
  * @param int $companyid
  * @return string|bool
  */
+/**
+ * Returns the Moodle Universal Cache (MUC) application store for tenant image URLs.
+ * Automatically disabled when $CFG->themedesignermode is active so designers see live file updates.
+ *
+ * @return \cache_application|null
+ */
+function theme_trema_get_image_muc_cache() {
+    global $CFG;
+    static $muc = null;
+
+    if (!empty($CFG->themedesignermode)) {
+        return null;
+    }
+    if ($muc === null) {
+        try {
+            $muc = \cache::make('theme_trema', 'tenant_image_urls');
+        } catch (\Throwable $e) {
+            $muc = false;
+        }
+    }
+    return $muc ?: null;
+}
+
+/**
+ * Purges the MUC tenant_image_urls cache and triggers the invalidation event.
+ */
+function theme_trema_purge_image_muc_cache(): void {
+    try {
+        if (class_exists('\cache_helper')) {
+            \cache_helper::purge_by_event('theme_trema_images_updated');
+        }
+        $muc = \cache::make('theme_trema', 'tenant_image_urls');
+        if ($muc) {
+            $muc->purge();
+        }
+    } catch (\Throwable $e) {
+        // Ignore if cache definition is not yet registered before upgrade completes.
+    }
+}
+
+/**
+ * Custom updatedcallback for theme settings that purges both MUC image cache and Moodle theme caches.
+ */
+function theme_trema_reset_all_caches(): void {
+    theme_trema_purge_image_muc_cache();
+    if (function_exists('theme_reset_all_caches')) {
+        theme_reset_all_caches();
+    }
+}
+
 function theme_trema_company_only_file_url(string $setting, string $filearea, int $companyid) {
     global $CFG;
 
@@ -1034,8 +1007,18 @@ function theme_trema_company_only_file_url(string $setting, string $filearea, in
         return false;
     }
 
+    $rev = function_exists('theme_get_revision') ? (int)theme_get_revision() : 1;
+    $ckey = "comp_{$setting}_{$filearea}_{$companyid}_{$rev}";
+    $muccache = theme_trema_get_image_muc_cache();
+    if ($muccache) {
+        $hit = $muccache->get($ckey);
+        if ($hit !== false) {
+            return ($hit === '__none__') ? false : $hit;
+        }
+    }
+
     $component = 'theme_trema';
-    $itemid = theme_get_revision();
+    $itemid = $rev;
     $syscontext = \context_system::instance();
     $compfilearea = "{$filearea}_c{$companyid}";
 
@@ -1048,10 +1031,16 @@ function theme_trema_company_only_file_url(string $setting, string $filearea, in
         $url = \moodle_url::make_file_url(
             "$CFG->wwwroot/pluginfile.php",
             "/$syscontext->id/$component/$compfilearea/$itemid" . $filepath
-        );
-        return $url->out(false);
+        )->out(false);
+        if ($muccache) {
+            $muccache->set($ckey, $url);
+        }
+        return $url;
     }
 
+    if ($muccache) {
+        $muccache->set($ckey, '__none__');
+    }
     return false;
 }
 
@@ -1072,10 +1061,23 @@ function theme_trema_setting_file_url($setting, $filearea, $theme = null, ?int $
         $companyid = theme_trema_get_active_companyid();
     }
 
+    $rev = function_exists('theme_get_revision') ? (int)theme_get_revision() : 1;
+    $ckey = "set_{$setting}_{$filearea}_{$companyid}_{$rev}";
+    $muccache = theme_trema_get_image_muc_cache();
+    if ($muccache) {
+        $hit = $muccache->get($ckey);
+        if ($hit !== false) {
+            return ($hit === '__none__') ? false : $hit;
+        }
+    }
+
     // 1. Check company-specific filearea first if a tenant is active.
     if ($companyid > 0) {
         $compurl = theme_trema_company_only_file_url($setting, $filearea, $companyid);
         if (!empty($compurl)) {
+            if ($muccache) {
+                $muccache->set($ckey, $compurl);
+            }
             return $compurl;
         }
     }
@@ -1093,10 +1095,16 @@ function theme_trema_setting_file_url($setting, $filearea, $theme = null, ?int $
         $url = \moodle_url::make_file_url(
             "$CFG->wwwroot/pluginfile.php",
             "/$syscontext->id/$component/$filearea/$itemid" . $filepath
-        );
-        return $url->out(false);
+        )->out(false);
+        if ($muccache) {
+            $muccache->set($ckey, $url);
+        }
+        return $url;
     }
 
+    if ($muccache) {
+        $muccache->set($ckey, '__none__');
+    }
     return false;
 }
 
@@ -1265,8 +1273,12 @@ function theme_trema_get_tenant_custom_css(?int $companyid = null): string {
     $css .= "    background-color: {$primary} !important;\n";
     $css .= "    border-color: {$primary} !important;\n";
     $css .= "}\n";
+    $defaultactiveborder = ($headertextcolor === '#ffffff') ? '#ffffff' : $primary;
     $css .= "{$bodyselector} .moremenu .nav-link.active {\n";
-    $css .= "    border-bottom-color: {$primary} !important;\n";
+    $css .= "    border-bottom-color: var(--trema-nav-active-border, {$primary});\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .moremenu .nav-link.active {\n";
+    $css .= "    border-bottom-color: var(--trema-nav-active-border, {$defaultactiveborder});\n";
     $css .= "}\n";
 
     // Secondary color overrides.
@@ -1275,15 +1287,92 @@ function theme_trema_get_tenant_custom_css(?int $companyid = null): string {
     $css .= "    border-color: {$secondary} !important;\n";
     $css .= "}\n";
 
-    // Softness (border-radius).
+    // Softness (border-radius) & Main Region layout spacing.
     $css .= "{$bodyselector} .card, {$bodyselector} .btn, {$bodyselector} .form-control {\n";
     $css .= "    border-radius: {$softness};\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #region-main {\n";
+    $css .= "    border: none;\n";
+    $css .= "    border-radius: 8px;\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #page.drawers div[role='main'] {\n";
+    $css .= "    padding: 0.8rem;\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar-light .navbar-brand {\n";
+    $css .= "    max-width: 260px;\n";
+    $css .= "    max-height: 66px;\n";
+    $css .= "    width: fit-content;\n";
+    $css .= "    overflow: hidden;\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar-light .navbar-brand img,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar-light .navbar-brand .logo {\n";
+    $css .= "    max-height: 64px;\n";
+    $css .= "    width: auto !important;\n";
+    $css .= "    max-width: 260px;\n";
+    $css .= "    object-fit: contain;\n";
     $css .= "}\n";
 
     // Header (.navbar), drawer (#nav-drawer, .drawer), login button backgrounds.
     $css .= "{$bodyselector} .navbar, {$bodyselector} #page-wrapper .navbar {\n";
     $css .= "    background-color: {$headerbg} !important;\n";
     $css .= "    color: {$headertextcolor};\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .site-name,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar.navbar-light .navbar-brand,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .primary-navigation .navigation .nav-link,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .primary-navigation .navigation .nav-link:hover,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .primary-navigation .navigation .nav-link:focus,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar.navbar-light .navbar-nav > .nav-item > .nav-link,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-toggle,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-toggle .icon,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .usermenu .usertext,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .usermenu .dropdown-toggle,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .usermenu .dropdown-toggle::after,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar.navbar-light .navbar-nav .editmode-switch-form,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar.navbar-light .navbar-nav .editmode-switch-form .text-primary {\n";
+    $css .= "    color: {$headertextcolor} !important;\n";
+    $css .= "}\n";
+
+    // Isolate floating popovers, notifications, messages, and dropdowns inside .navbar so dark headers never turn their text white.
+    $css .= "{$bodyselector} .navbar .popover-region-container,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-container,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-header-container,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-header-text,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-content-container,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-content,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .content-item-container,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .content-item-container .icon,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .content-item-body,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .content-item-body h3,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .content-item-body p,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .notification-message,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-container .empty-message,\n";
+    $css .= "{$bodyselector} .navbar .dropdown-menu,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .dropdown-menu,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar #usermenu-carousel,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .dropdown-menu .dropdown-item,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-body,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-header,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .search-input-wrapper .form-control {\n";
+    $css .= "    color: #343a40 !important;\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-container small,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-container .text-muted,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-container .timestamp,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-container .content-item-footer,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .dropdown-menu .text-muted {\n";
+    $css .= "    color: #6c757d !important;\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-container a:not(.btn),\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .popover-region-footer-container a {\n";
+    $css .= "    color: {$primary} !important;\n";
+    $css .= "}\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .dropdown-menu .dropdown-item:hover,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .dropdown-menu .dropdown-item:focus,\n";
+    $css .= "{$bodyselector} #page-wrapper .navbar .dropdown-menu .dropdown-item:focus-within {\n";
+    $css .= "    background-color: {$primary} !important;\n";
+    $css .= "    color: #ffffff !important;\n";
     $css .= "}\n";
     $css .= "{$bodyselector} .usermenu .login a.btn {\n";
     $css .= "    background-color: {$loginbtnbg} !important;\n";

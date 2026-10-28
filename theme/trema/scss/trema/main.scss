@@ -164,11 +164,12 @@ body {
 
     #region-main {
         border: none;
+        border-radius: 8px;
     }
 
     #page.drawers {
         div[role='main'] {
-            padding: 0;
+            padding: 0.8rem;
         }
     }
 
@@ -403,4 +404,14 @@ body#page-contentbank {
     body #page h1 {
         font-size: calc(0.9975rem + 1.17vw);
     }
+}
+
+
+// Height utility helpers (.h-80 and .vh-80).
+.h-80 {
+    height: 80% !important;
+}
+
+.vh-80 {
+    height: 80vh !important;
 }

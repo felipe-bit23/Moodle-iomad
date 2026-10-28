@@ -334,9 +334,10 @@ body#page-login-verify_age_location {
     .login-container {
         width: auto !important;
         background-color: #fff;
-        padding: 3rem;
-        box-shadow: 0 .5rem 1rem rgb(0 0 0 / .15);
-        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.5rem;
     }
     .login-wrapper {
         display: flex;

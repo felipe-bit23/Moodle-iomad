@@ -256,12 +256,7 @@ $editmodeon-bg-color: #343a40 !default;
                     }
                 }
             }
-            .pagelayout-login .login-container {
-                background-color: #fff;
-                padding: 3rem;
-                box-shadow: 0 .5rem 1rem rgb(0 0 0 / .15);
-                margin-bottom: 2rem;
-            }
+            /* .login-container is managed exclusively in scss/trema/login.scss */
         ';
     }
 
@@ -427,62 +422,67 @@ function theme_trema_page_init(moodle_page $page) {
 
     // 1. Enhance IOMAD Edit Company -> Appearance (#id_theme) so selecting 'trema' (or default)
     // is 100% recognized and never hides IOMAD Appearance fields (logo, colors, customcss).
+    // Uses lightweight event listeners ONLY (no recursive MutationObserver) so forms never freeze.
     if (strpos($pagepath, '/blocks/iomad_company_admin/company_edit_form.php') !== false) {
-        $tremasettingsurl = (new moodle_url('/admin/settings.php', [
+        if (!empty($_POST) && function_exists('theme_trema_purge_image_muc_cache')) {
+            theme_trema_purge_image_muc_cache();
+        }
+        $iscreating = optional_param('createnew', 0, PARAM_INT) === 1;
+        $editcompanyid = (!$iscreating && $companyid > 0) ? (int)$companyid : 0;
+        $tremasettingsurl = ($editcompanyid > 0) ? (new moodle_url('/admin/settings.php', [
             'section' => 'themesettingtrema',
-            'trema_companyid' => $companyid,
-        ]))->out(false);
+            'trema_companyid' => $editcompanyid,
+        ]))->out(false) : '';
         $js = "
         (function() {
+            var editUrl = '" . addslashes($tremasettingsurl) . "';
             function unlockTremaAppearance() {
                 var themeSelect = document.getElementById('id_theme');
                 if (!themeSelect) { return; }
                 var val = themeSelect.value;
                 if (val === 'trema' || val === '') {
                     var container = themeSelect.closest('fieldset') || document;
-                    var hiddenItems = container.querySelectorAll('.fitem, [data-groupname]');
-                    hiddenItems.forEach(function(el) {
-                        if (el.id === 'fitem_id_theme') { return; }
-                        el.removeAttribute('hidden');
-                        el.classList.remove('hidden', 'd-none');
+                    var items = container.querySelectorAll('.fitem, [data-groupname]');
+                    for (var i = 0; i < items.length; i++) {
+                        var el = items[i];
+                        if (el.id === 'fitem_id_theme') { continue; }
+                        if (el.hasAttribute('hidden')) { el.removeAttribute('hidden'); }
+                        if (el.classList.contains('hidden') || el.classList.contains('d-none')) {
+                            el.classList.remove('hidden', 'd-none');
+                        }
                         if (el.style && el.style.display === 'none') {
                             el.style.display = '';
                         }
-                        var inputs = el.querySelectorAll('input, select, textarea, button');
-                        inputs.forEach(function(inp) { inp.removeAttribute('disabled'); });
-                    });
+                        var inputs = el.querySelectorAll('input[disabled], select[disabled], textarea[disabled], button[disabled]');
+                        for (var j = 0; j < inputs.length; j++) {
+                            inputs[j].removeAttribute('disabled');
+                        }
+                    }
                 }
-                if (!document.getElementById('trema-iomad-edit-link')) {
+                if (editUrl && !document.getElementById('trema-iomad-edit-link')) {
                     var wrap = document.createElement('div');
                     wrap.id = 'trema-iomad-edit-link';
                     wrap.className = 'mt-2';
-                    wrap.innerHTML = '<a href=\"" . addslashes($tremasettingsurl) . "\" class=\"btn btn-sm btn-outline-primary\">' +
+                    wrap.innerHTML = '<a href=\"' + editUrl + '\" class=\"btn btn-sm btn-outline-primary\">' +
                         '<i class=\"fa fa-paint-brush mr-1 me-1\"></i> Configurar banner, tarjetas y pie de página de Trema para esta compañía</a>';
                     themeSelect.parentNode.appendChild(wrap);
                 }
             }
-            document.addEventListener('DOMContentLoaded', function() {
+            function bindTremaCompanyForm() {
                 unlockTremaAppearance();
-                setTimeout(unlockTremaAppearance, 150);
-                setTimeout(unlockTremaAppearance, 500);
                 var themeSelect = document.getElementById('id_theme');
-                if (themeSelect) {
+                if (themeSelect && !themeSelect.dataset.tremaBound) {
+                    themeSelect.dataset.tremaBound = '1';
                     themeSelect.addEventListener('change', function() {
-                        setTimeout(unlockTremaAppearance, 10);
-                        setTimeout(unlockTremaAppearance, 100);
+                        setTimeout(unlockTremaAppearance, 20);
                     });
-                    var fs = themeSelect.closest('fieldset');
-                    if (fs && window.MutationObserver) {
-                        var obs = new MutationObserver(function() {
-                            if (themeSelect.value === 'trema' || themeSelect.value === '') {
-                                unlockTremaAppearance();
-                            }
-                        });
-                        obs.observe(fs, { attributes: true, subtree: true, attributeFilter: ['hidden', 'class', 'style'] });
-                    }
                 }
-            });
-            unlockTremaAppearance();
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bindTremaCompanyForm);
+            } else {
+                bindTremaCompanyForm();
+            }
         })();
         ";
         $page->requires->js_amd_inline($js);
@@ -520,7 +520,7 @@ function theme_trema_page_init(moodle_page $page) {
                     if (!store) { return; }
                     for (var i = store.length - 1; i >= 0; i--) {
                         var k = store.key(i);
-                        if (k && (k.indexOf('tiny_autosave') !== -1 || k.indexOf('theme_trema') !== -1)) {
+                        if (k && k.indexOf('theme_trema') !== -1) {
                             store.removeItem(k);
                         }
                     }
